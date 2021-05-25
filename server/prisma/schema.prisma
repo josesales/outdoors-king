@@ -7,27 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
+model cart {
+  id        Int         @id
+  userId    Int         @map("user")
+  user      user        @relation(fields: [userId], references: [id])
+  cartItems cartItems[]
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int     @unique
-  user   User    @relation(fields: [userId], references: [id])
+model cartItems {
+  id       Int  @id
+  cartId   Int  @map("cart")
+  itemId   Int  @map("item")
+  quantity Int
+  cart     cart @relation(fields: [cartId], references: [id])
+  item     item @relation(fields: [itemId], references: [id])
+
+  @@map("cart-items")
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
-  post    Post[]
-  profile Profile?
+model category {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(255)
+  item item[]
+}
+
+model item {
+  id         Int         @id
+  name       String      @db.VarChar(255)
+  price      Float
+  categoryId Int         @map("category")
+  category   category    @relation(fields: [categoryId], references: [id])
+  cart_items cartItems[]
+}
+
+model profile {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(255)
+  user user[]
+}
+
+model user {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(255)
+  email     String  @unique @db.VarChar(255)
+  password  String  @db.VarChar(500)
+  profileId Int     @map("profile")
+  profile   profile @relation(fields: [profileId], references: [id])
+  cart      cart[]
 }
