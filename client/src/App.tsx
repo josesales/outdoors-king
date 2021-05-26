@@ -1,23 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { lazy, Suspense } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import Header from './components/Header';
+import Loader from './components/Loader';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Checkout from './pages/Checkout';
 
 function App(): JSX.Element {
-  const [toggle, setToggle] = React.useState<boolean>(false)
-  console.log("toggle", toggle)
 
-  const buttonClasses = toggle
-    ? "bg-red-500 hover:bg-red-500"
-    : "bg-blue-500 hover:bg-blue-500"
   return (
-    <div className="bg-gray-200 flex items-center justify-center h-screen">
-      <button
-        className={`p-3 rounded-sm ${buttonClasses}`}
-        onClick={() => setToggle(!toggle)}
-      >
-        Toggle
-      </button>
-    </div>
+    <React.Fragment>
+      <Header />
+      <Switch>
+        <Suspense fallback={<Loader />}>
+          <Route exact path='/' component={Home} />
+          <Route path='/login' component={Login} />
+          <Route path='/checkout' component={Checkout} />
+        </Suspense>
+      </Switch>
+    </React.Fragment>
   )
 }
 

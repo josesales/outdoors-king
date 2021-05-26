@@ -1,1 +1,1 @@
-# sports-king
+# outdoors-king
