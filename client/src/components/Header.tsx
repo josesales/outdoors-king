@@ -1,16 +1,17 @@
 import React from 'react';
 import logo from '../assets/logo.png';
-import cart from '../assets/cart.svg';
 import { Link } from 'react-router-dom';
 import globalStyles from '../globalStyles';
-
+import CategoryDropdown from './CategoryDropdown';
+import AdminDropdown from './AdminDropdown';
+import CartDropdown from './CartDropdown';
 
 const Header = (): JSX.Element => {
 
     return (
         <React.Fragment>
 
-            <div className="flex justify-around items-center fixed top-0 left-0 z-40 h-48 w-full 
+            <div className="flex justify-around items-center fixed top-0 left-0 z-50 h-48 w-full bg-indigo-100
                 border-b-2 border-gray-500">
 
                 <Link className='flex flex-none' to='/'>
@@ -21,24 +22,17 @@ const Header = (): JSX.Element => {
                     Login
                 </Link>
 
-                <div className={`flex-initial cursor-pointer ${globalStyles.textBig} ${globalStyles.borderBottomHover}`}>
-                    Category
-                </div>
+                <CategoryDropdown />
 
+                <AdminDropdown />
 
-                <div className={`flex-initial cursor-pointer ${globalStyles.textBig} ${globalStyles.borderBottomHover}`}>
-                    Admin
-                </div>
-
-                <Link className='flex flex-none' to='/'>
-                    <img title="Cart" src={cart} alt="Your Cart" className="w-10 h-6 sm:w-20 sm:h-16" />
-                </Link>
+                <CartDropdown />
 
             </div>
 
             <div className="mt-60"></div>
-
         </React.Fragment>
+
     );
 }
 
