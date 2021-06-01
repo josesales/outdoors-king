@@ -8,13 +8,13 @@ datasource db {
 }
 
 model cart {
-  id        Int         @id
-  userId    Int         @map("user")
-  user      user        @relation(fields: [userId], references: [id])
-  cartItems cartItems[]
+  id        Int        @id
+  userId    Int        @map("user")
+  user      user       @relation(fields: [userId], references: [id])
+  cartItems cartItem[]
 }
 
-model cartItems {
+model cartItem {
   id       Int  @id
   cartId   Int  @map("cart")
   itemId   Int  @map("item")
@@ -22,22 +22,22 @@ model cartItems {
   cart     cart @relation(fields: [cartId], references: [id])
   item     item @relation(fields: [itemId], references: [id])
 
-  @@map("cart-items")
+  @@map("cart-item")
 }
 
 model category {
-  id   Int     @id @default(autoincrement())
-  name String? @db.VarChar(255)
-  item item[]
+  id    Int     @id @default(autoincrement())
+  name  String? @db.VarChar(255)
+  items item[]
 }
 
 model item {
-  id         Int         @id
-  name       String      @db.VarChar(255)
+  id         Int        @id
+  name       String     @db.VarChar(255)
   price      Float
-  categoryId Int         @map("category")
-  category   category    @relation(fields: [categoryId], references: [id])
-  cart_items cartItems[]
+  categoryId Int        @map("category")
+  category   category   @relation(fields: [categoryId], references: [id])
+  cart_items cartItem[]
 }
 
 model profile {

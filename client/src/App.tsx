@@ -4,22 +4,33 @@ import './App.css';
 import Header from './components/Header';
 import Loader from './components/Loader';
 import Home from './pages/Home';
-import Login from './pages/Login';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import PasswordReset from './pages/PasswordReset';
 import Checkout from './pages/Checkout';
+import Category from './pages/Category';
+import User from './pages/User';
+import Item from './pages/Item';
 
 function App(): JSX.Element {
 
   return (
-    <React.Fragment>
+    <div>
+
       <Header />
       <Switch>
         <Suspense fallback={<Loader />}>
           <Route exact path='/' component={Home} />
-          <Route path='/login' component={Login} />
+          <Route exact path='/category' component={Category} />
+          <Route path='/signIn' component={SignIn} />
+          <Route path='/signUp' component={SignUp} />
+          <Route path='/passwordReset' component={PasswordReset} />
           <Route path='/checkout' component={Checkout} />
+          <Route path='/user' component={User} />
+          <Route path='/item' component={Item} />
         </Suspense>
       </Switch>
-    </React.Fragment>
+    </div>
   )
 }
 

@@ -1,11 +1,16 @@
 import React from 'react';
+import Categories from '../components/Categories';
+import Search from '../components/Search';
+import globalStyles from '../globalStyles';
 
 const Home = () => {
 
     return (
-        <div>
+        <div className={globalStyles.pageContainer}>
 
-            <h1>Home Page</h1>
+            <Search />
+
+            <Categories />
         </div>
     );
 }
