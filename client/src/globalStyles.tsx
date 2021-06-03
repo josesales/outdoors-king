@@ -40,7 +40,27 @@ const globalStyles = {
         ul: 'w-full flex flex-col justify-center items-center list-none overflow-x-hidden overscroll-y-auto max-h-96 p-8',
 
         li: 'flex-grow p-1 rounded-lg cursor-pointer hover:bg-indigo-100',
+    },
+
+    imageUpload: `w-28 h-28 sm:w-40 sm:h-40 rounded-2xl mb-12 focus:outline-none
+        bg-gray-200 placeholder-black bg-gradient-to-r from-indigo-100 
+        via-red-400 to-yellow-400 cursor-pointer`,
+
+    checkout: {
+
+        big: 'capitalize w-4/12 flex justify-center cursor-default',
+        default: 'capitalize w-2/12 flex justify-center cursor-default',
+
+        header: {
+            container: 'w-full sm:w-11/12 md:w-9/12 flex justify-center border-b cursor-default',
+        },
+
+        content: {
+            container: 'w-full sm:w-11/12 md:w-9/12 flex justify-center items-center mb-2 mt-2',
+            image: 'w-full sm:w-9/12 md:w-8/12 xl:w-5/12',
+        }
     }
+
 }
 
 export default globalStyles;

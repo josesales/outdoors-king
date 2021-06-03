@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router';
+import ImageUpload from '../components/ImageUpload';
 import Select from '../components/Select';
-import ToggleSwitch from '../components/ToggleSwitch';
 import globalStyles from '../globalStyles';
 import Category from '../interfaces/category';
 import ItemInterface from '../interfaces/item';
 import ItemLocation from '../interfaces/itemLocation';
-import UserLocation from '../interfaces/userLocation';
 import { categoriesList } from '../testData/category';
 
 const Item = (): JSX.Element => {
@@ -57,6 +56,8 @@ const Item = (): JSX.Element => {
 
             <Select placeholder="Category" title="Select the Category of the Product."
                 options={categories} callback={onCategorySelected} />
+
+            <ImageUpload title="Upload Image" />
 
             <button title="Confirm Operation" onClick={onConfirmClick} className={globalStyles.button}>
                 {itemState ? 'Edit' : 'Add'}

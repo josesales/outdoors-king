@@ -1,5 +1,6 @@
 import React from 'react';
 import globalStyles from '../globalStyles';
+import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import CartItem from '../interfaces/cartItem';
 import HTML_ENTITIES from '../utils/htmlEntities';
 
@@ -20,15 +21,15 @@ const CheckoutItem = ({ cartItem }: { cartItem: CartItem }) => {
     }
 
     return (
-        <div className={`w-full sm:w-11/12 md:w-9/12 flex justify-center items-center mb-2 mt-2`}>
+        <div className={`${globalStyles.checkout.content.container}`}>
 
-            <div className='w-2/12 flex justify-center'>
-                <img src={item?.image} alt='item' className='w-full sm:w-9/12 md:w-8/12 xl:w-5/12' />
+            <div className={`${globalStyles.checkout.default}`}>
+                <img src={item?.image} alt='item' className={`${globalStyles.checkout.content.image}`} />
             </div>
 
-            <span className={`${globalStyles.textDefault} w-4/12 flex justify-center cursor-default`}>{item?.name}</span>
+            <span className={`${globalStyles.textDefault} ${globalStyles.checkout.big}`}>{item?.name}</span>
 
-            <span className={`${globalStyles.textDefault} w-2/12 flex justify-center`}>
+            <span className={`${globalStyles.textDefault} ${globalStyles.checkout.default}`}>
                 <div className='mr-auto cursor-pointer' onClick={() => removeItem()}>
                     {HTML_ENTITIES.leftArrow}
                 </div>
@@ -38,12 +39,10 @@ const CheckoutItem = ({ cartItem }: { cartItem: CartItem }) => {
                 </div>
             </span>
 
-            <span className={`${globalStyles.textDefault} w-2/12 flex justify-center cursor-default`}>{item?.price}</span>
+            <span className={`${globalStyles.textDefault} ${globalStyles.checkout.default}`}>{item?.price}</span>
 
-            <div className={`${globalStyles.textBig} w-2/12 flex justify-center`} onClick={() => clearItem()}>
-                <span className="cursor-pointer hover:text-red-500">
-                    {HTML_ENTITIES.clean}
-                </span>
+            <div className={`${globalStyles.checkout.default}`} onClick={() => clearItem()}>
+                <DeleteIcon className="cursor-pointer w-6 h-6  sm:w-10 sm:h-10 fill-current hover:text-red-500" />
             </div>
         </div>
     );

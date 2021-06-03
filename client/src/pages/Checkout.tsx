@@ -14,26 +14,25 @@ const Checkout = () => {
 
         <div className={`${globalStyles.pageContainer}`}>
 
-            <div className={`w-full sm:w-11/12 md:w-9/12 flex justify-center border-b cursor-default
-               ${globalStyles.textDefault}  ${globalStyles.borderBottom}`}>
+            <div className={`${globalStyles.checkout.header.container} ${globalStyles.textDefault}  ${globalStyles.borderBottom}`}>
 
-                <div className='capitalize w-2/12 flex justify-center'>
+                <div className={globalStyles.checkout.default}>
                     <span></span>
                 </div>
 
-                <div className='capitalize w-4/12 flex justify-center'>
+                <div className={globalStyles.checkout.big}>
                     <span>Product</span>
                 </div>
 
-                <div className='capitalize w-2/12 flex justify-center'>
+                <div className={globalStyles.checkout.default}>
                     <span>Quantity</span>
                 </div>
 
-                <div className='capitalize w-2/12 flex justify-center'>
+                <div className={globalStyles.checkout.default}>
                     <span>Price</span>
                 </div>
 
-                <div className='capitalize w-2/12 flex justify-center'>
+                <div className={globalStyles.checkout.default}>
                     <span>Remove</span>
                 </div>
             </div>
