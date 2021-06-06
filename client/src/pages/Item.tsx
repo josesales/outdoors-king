@@ -57,7 +57,7 @@ const Item = (): JSX.Element => {
             <Select placeholder="Category" title="Select the Category of the Product."
                 options={categories} callback={onCategorySelected} />
 
-            <ImageUpload title="Upload Image" />
+            <ImageUpload title="Image" />
 
             <button title="Confirm Operation" onClick={onConfirmClick} className={globalStyles.button}>
                 {itemState ? 'Edit' : 'Add'}

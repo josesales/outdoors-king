@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import globalStyles from '../globalStyles';
 
 interface Option {
@@ -43,7 +43,7 @@ const Select = ({ initialValue, placeholder, title, options, callback }:
         const elementName = (e.target as Element).nodeName;
         // const id = containerRef.current && containerRef.current.id ? containerRef.current.id : null;
         //hides the dropdown if user clicks outside of it
-        if (id == 'input-select' || id == 'select-container') {
+        if (id === 'input-select' || id === 'select-container') {
             //inside of the div
             setIsVisible(true);
         } else if (elementName.toLowerCase() !== 'li') {

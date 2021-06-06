@@ -6,10 +6,10 @@ const ImageUpload = ({ title }: { title: string }) => {
 
     const [base64Image, setBase64Image] = useState<string | ArrayBuffer>('');
 
-
     const onFileUploaded = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const { target } = event;
+
         if (target.files && target.files[0]) {
             var reader = new FileReader();
 
@@ -39,7 +39,7 @@ const ImageUpload = ({ title }: { title: string }) => {
 
                     base64Image ?
                         <form encType="multipart/form-data">
-                            <img src={base64Image.toString()} title={title} className={`${globalStyles.imageUpload}`} />
+                            <img src={base64Image.toString()} alt="Product" title={title} className={`${globalStyles.imageUpload}`} />
                         </form> :
 
                         <Upload title={title} className={`${globalStyles.imageUpload}`} />
