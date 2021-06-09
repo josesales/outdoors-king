@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryItems from './CategoryItems';
+import CategoryProducts from './CategoryProducts';
 import Category from '../interfaces/category';
 import { categoriesList } from '../testData/category';
 
@@ -11,7 +11,7 @@ const Categories = () => {
     const categories = categoriesList;
 
     if (categories) {
-        categoriesUi = categories.map(category => <CategoryItems
+        categoriesUi = categories.map(category => <CategoryProducts
             key={category.id} category={category} minified={true} />)
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router';
-import CategoryItems from '../components/CategoryItems';
+import CategoryProducts from '../components/CategoryProducts';
 import globalStyles from '../globalStyles';
 import CategoryLocation from '../interfaces/categoryLocation';
 
@@ -20,7 +20,7 @@ const Category = () => {
                 category ?
 
                     <div className='w-full flex flex-col'>
-                        <CategoryItems key={category.id} category={category} />;
+                        <CategoryProducts key={category.id} category={category} />;
                     </div>
 
                     : null

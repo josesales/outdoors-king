@@ -1,9 +1,9 @@
-import Item from "./item";
+import Product from "./product";
 
 interface Category {
     id?: number,
     name: string,
-    items?: Array<Item>,
+    products?: Array<Product>,
 }
 
 export default Category;

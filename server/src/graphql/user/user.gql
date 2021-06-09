@@ -1,0 +1,49 @@
+query {
+  users {
+    id
+    email
+    name
+  }
+}
+
+query {
+  login(loginInput: {email:"sales1@sales4.com", password:"1234"}) {
+   	token
+    tokenExpiration
+    user{
+        id
+        email
+        name
+      }
+  } 
+}
+
+query{
+  sendPasswordEmail(email: "salesbass@gmail.com")
+}
+
+query{
+  confirmPasswordResetCode(email: "salesbass@gmail.com", code: 323127){
+    id
+    email
+    name
+    
+  }
+}
+
+mutation {
+    createUser(userInput: {name: "Sales" email:"sales1@sales4.com", password:"1234"}) {
+   		email
+    	password
+      profile {
+        id
+        name
+      }
+    }
+} 
+
+mutation {
+  resetPassword(newPassword: "password" 
+    userInput: {id:21  name:"Sales" email:"salesbass@gmail.com"})
+}
+

@@ -17,7 +17,7 @@ const AdminDropdown = () => {
             <div className={globalStyles.headerDropdown.div(isVisible, '-left-16')}>
                 <ul className={globalStyles.headerDropdown.ul}>
                     <li onClick={() => history.push('/user')} className={globalStyles.headerDropdown.li}>Add User</li>
-                    <li onClick={() => history.push('/item')} className={globalStyles.headerDropdown.li}>Add Product</li>
+                    <li onClick={() => history.push('/product')} className={globalStyles.headerDropdown.li}>Add Product</li>
                 </ul>
             </div>
         </div>

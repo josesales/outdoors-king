@@ -2,26 +2,26 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import globalStyles from '../globalStyles';
 import Category from '../interfaces/category';
-import CategoryItem from './CategoryItem';
+import CategoryProduct from './CategoryProduct';
 
-const CategoryItems = ({ category, minified }: { category: Category, minified?: boolean }) => {
+const CategoryProducts = ({ category, minified }: { category: Category, minified?: boolean }) => {
 
 
     const history = useHistory();
 
-    const { items, name } = category;
-    let itemsUi = null;
+    const { products, name } = category;
+    let productsUi = null;
 
-    if (items) {
-        itemsUi = items.filter((item, idx) => idx < 3).map(item => (<CategoryItem key={item.id} item={item} />));
+    if (products) {
+        productsUi = products.filter((product, idx) => idx < 3).map(product => (<CategoryProduct key={product.id} product={product} />));
         if (minified) {
-            itemsUi = items.filter((item, idx) => idx < 3).map(item => (<CategoryItem key={item.id} item={item} />));
+            productsUi = products.filter((product, idx) => idx < 3).map(product => (<CategoryProduct key={product.id} product={product} />));
         } else {
-            itemsUi = items.map(item => (<CategoryItem key={item.id} item={item} />));
+            productsUi = products.map(product => (<CategoryProduct key={product.id} product={product} />));
         }
     }
 
-    const showAllItems = () => {
+    const showAllProducts = () => {
         history.push('/category', { category })
     }
 
@@ -32,14 +32,14 @@ const CategoryItems = ({ category, minified }: { category: Category, minified?: 
                 name ?
                     <div className="w-full flex justify-between items-center">
 
-                        <h1 onClick={showAllItems} className={`mb-8 sm:ml-8 cursor-pointer capitalize 
+                        <h1 onClick={showAllProducts} className={`mb-8 sm:ml-8 cursor-pointer capitalize 
                             ${globalStyles.textXBig} ${globalStyles.borderBottomHover}`}>
                             {name}
                         </h1>
 
                         {
                             minified ?
-                                <span onClick={showAllItems} className={`cursor-pointer mb-8 sm:mr-8 
+                                <span onClick={showAllProducts} className={`cursor-pointer mb-8 sm:mr-8 
                                 ${globalStyles.textBig} ${globalStyles.borderBottomHover}`}>
                                     See more...
                             </span> : null
@@ -49,9 +49,9 @@ const CategoryItems = ({ category, minified }: { category: Category, minified?: 
             }
 
             {
-                itemsUi && itemsUi.length > 0 ?
+                productsUi && productsUi.length > 0 ?
                     <div className="flex justify-center flex-wrap">
-                        {itemsUi}
+                        {productsUi}
                     </div>
 
                     :
@@ -63,4 +63,4 @@ const CategoryItems = ({ category, minified }: { category: Category, minified?: 
     );
 }
 
-export default CategoryItems;
+export default CategoryProducts;

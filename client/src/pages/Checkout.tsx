@@ -1,12 +1,12 @@
 import React from 'react';
-import CheckoutItem from '../components/CheckoutItem';
+import CheckoutProduct from '../components/CheckoutProduct';
 import StripeCheckoutButton from '../components/StripeButton';
 import globalStyles from '../globalStyles';
-import { cartItems as cartItemsData } from '../testData/cartItem';
+import { cartProduct as cartProductData } from '../testData/cartProduct';
 
 const Checkout = () => {
 
-    const cartItems = cartItemsData;
+    const cartProducts = cartProductData;
 
     const total = 99;
 
@@ -37,8 +37,8 @@ const Checkout = () => {
                 </div>
             </div>
 
-            {cartItems.map(cartItem => (
-                <CheckoutItem key={cartItem.id} cartItem={cartItem} />
+            {cartProducts.map(cartProduct => (
+                <CheckoutProduct key={cartProduct.id} cartProduct={cartProduct} />
             ))}
 
             <div className={`flex-initial ${globalStyles.textDefault} font-bold mt-4`}>TOTAL: ${total}</div>

@@ -10,7 +10,7 @@ import PasswordReset from './pages/PasswordReset';
 import Checkout from './pages/Checkout';
 import Category from './pages/Category';
 import User from './pages/User';
-import Item from './pages/Item';
+import Product from './pages/Product';
 
 function App(): JSX.Element {
 
@@ -27,7 +27,7 @@ function App(): JSX.Element {
           <Route path='/passwordReset' component={PasswordReset} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/user' component={User} />
-          <Route path='/item' component={Item} />
+          <Route path='/product' component={Product} />
         </Suspense>
       </Switch>
     </div>

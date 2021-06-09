@@ -8,36 +8,36 @@ datasource db {
 }
 
 model cart {
-  id        Int        @id
-  userId    Int        @map("user")
-  user      user?      @relation(fields: [userId], references: [id])
-  cartItems cartItem[]
+  id           Int           @id @default(autoincrement())
+  userId       Int           @map("user")
+  user         user?         @relation(fields: [userId], references: [id])
+  cartProducts cartProduct[]
 }
 
-model cartItem {
-  id       Int  @id
-  cartId   Int  @map("cart")
-  itemId   Int  @map("item")
-  quantity Int
-  cart     cart @relation(fields: [cartId], references: [id])
-  item     item @relation(fields: [itemId], references: [id])
+model cartProduct {
+  id        Int     @id @default(autoincrement())
+  cartId    Int     @map("cart")
+  productId Int     @map("product")
+  quantity  Int
+  cart      cart    @relation(fields: [cartId], references: [id])
+  product   product @relation(fields: [productId], references: [id])
 
-  @@map("cart-item")
+  @@map("cart-product")
 }
 
 model category {
-  id    Int     @id @default(autoincrement())
-  name  String? @db.VarChar(255)
-  items item[]
+  id       Int       @id @default(autoincrement())
+  name     String?   @db.VarChar(255)
+  products product[]
 }
 
-model item {
-  id         Int        @id
-  name       String     @db.VarChar(255)
-  price      Float
-  categoryId Int        @map("category")
-  category   category   @relation(fields: [categoryId], references: [id])
-  cart_items cartItem[]
+model product {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(255)
+  price        Float
+  categoryId   Int           @map("category")
+  category     category      @relation(fields: [categoryId], references: [id])
+  cartProducts cartProduct[]
 }
 
 model profile {
@@ -47,12 +47,24 @@ model profile {
 }
 
 model user {
-  id        Int      @id @default(autoincrement())
-  name      String?  @db.VarChar(255)
-  email     String?  @unique @db.VarChar(255)
-  password  String?  @db.VarChar(500)
-  token     String?  @db.VarChar(1000)
-  profileId Int?     @map("profile")
-  profile   profile? @relation(fields: [profileId], references: [id])
-  cart      cart[]
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
+  email         String          @unique @db.VarChar(255)
+  password      String          @db.VarChar(500)
+  token         String?         @db.VarChar(1000)
+  profileId     Int?            @map("profile")
+  profile       profile?        @relation(fields: [profileId], references: [id])
+  cart          cart[]
+  passwordReset passwordReset[]
+
+  @@unique([id, name, email], name: "passwordResetKey")
+}
+
+model passwordReset {
+  id     Int  @id @default(autoincrement())
+  code   Int
+  userId Int  @unique @map("user")
+  user   user @relation(fields: [userId], references: [id])
+
+  @@map("password-reset")
 }

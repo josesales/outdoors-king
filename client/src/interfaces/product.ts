@@ -1,6 +1,6 @@
 import Category from "./category";
 
-interface Item {
+interface Product {
     id?: number,
     name: string,
     price: number,
@@ -8,4 +8,4 @@ interface Item {
     image?: string,
 }
 
-export default Item;
+export default Product;
