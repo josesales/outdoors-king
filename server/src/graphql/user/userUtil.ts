@@ -39,7 +39,7 @@ export const hashPassword = async (password: string) => {
     return hashedPassword;
 }
 
-export const generateToken = async (email: string, userId: number, context: Context) => {
+export const generateToken = async (email: string, userId: string, context: Context) => {
 
     const jwtKey = process.env.JWT_KEY ? process.env.JWT_KEY : 'jwtKey';
     const token = jwt.sign({ email, userId }, jwtKey, { expiresIn: '1h' });

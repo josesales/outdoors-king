@@ -3,14 +3,14 @@ const categorySchema = {
 
     types: `#graphql
         type Category {
-                id: Int
+                id: String
                 name: String    
             }
     `,
 
     inputs: `#graphql
         input CategoryInput {
-                id: Int
+                id: String
                 name: String
             }
     `,

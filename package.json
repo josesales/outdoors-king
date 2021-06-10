@@ -9,7 +9,8 @@
     "build": "cd client && npm run build",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "cd server/src && node server.js",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "seed": "ts-node server/prisma/seed.ts"
   },
   "keywords": [],
   "author": "Sales",

@@ -1,28 +1,111 @@
 import { ApolloError, UserInputError } from "apollo-server-errors";
-import { Resolvers, User, Auth } from "../generated/graphql-server";
+import { Resolvers, Product } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
+import { validate } from "./productUtil";
 
 const productResolver: Resolvers<Context> = {
 
     Query: {
-        //     products: async (parent, args, context): Promise<Product[]> => {
-        //         try {
+        products: async (parent, args, context): Promise<Product[]> => {
+            try {
 
-        //             const products: Product[] = await context.prisma.product.findMany({
-        //                 include: {
-        //                     category: true
-        //                 }
-        //             });
+                const products: Product[] = await context.prisma.product.findMany({
+                    include: {
+                        category: true
+                    }
+                });
 
-        //             return products;
-        //         } catch (error) {
-        //             throw new ApolloError('Error while fetching user', 'INTERNAL_SERVER_ERROR');
-        //         }
-        //     },
+                return products;
+            } catch (error) {
+                throw new ApolloError('Error while fetching user', 'INTERNAL_SERVER_ERROR');
+            }
+        },
+
+        product: async (parent, { productId }, context): Promise<Product> => {
+            try {
+
+                const product = await context.prisma.product.findUnique({
+                    where: {
+                        id: productId
+                    },
+                    include: {
+                        category: true
+                    }
+                });
+
+                if (!product) {
+                    throw new UserInputError('Product not found');
+                }
+
+                return product;
+            } catch (error) {
+                throw new ApolloError('Error while fetching product: ' + error.message, 'INTERNAL_SERVER_ERROR');
+            }
+        },
     },
 
     Mutation: {
+        saveProduct: async (parent, { productInput }, context): Promise<Product> => {
+            try {
 
+                if (!productInput) {
+                    throw new UserInputError('Please provide inputs');
+                }
+
+                await validate(productInput);
+
+                const categoryId: string = productInput.category?.id!;
+
+                const upsertData = {
+                    name: productInput.name!,
+                    price: productInput.price!,
+                    category: {
+                        connect: {
+                            id: categoryId
+                        }
+                    }
+                }
+
+                const product = await context.prisma.product.upsert({
+                    create: upsertData,
+                    update: upsertData,
+                    where: {
+                        id: productInput.id ? productInput.id : ''
+                    },
+                    include: {
+                        category: true
+                    }
+                });
+
+                return product;
+            } catch (error) {
+                throw new ApolloError(`Error while saving product: ${error.message}`, error.code ? error.code :
+                    'INTERNAL_SERVER_ERROR');
+            }
+        },
+
+        deleteProduct: async (parent, { productId }, context): Promise<boolean> => {
+            try {
+
+                if (!productId) {
+                    throw new UserInputError('Please provide inputs');
+                }
+
+                const product = await context.prisma.product.delete({
+                    where: {
+                        id: productId
+                    }
+                });
+
+                if (product) {
+                    return true
+                }
+                return false;
+            } catch (error) {
+                throw new ApolloError(`Error while saving product: ${error.message}`, error.code ? error.code :
+                    'INTERNAL_SERVER_ERROR');
+            }
+        },
     }
 }
 

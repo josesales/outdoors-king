@@ -3,6 +3,7 @@ import { validate, hashPassword, generateToken, sendPasswordEmail } from "./user
 import { Resolvers, User, Auth } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import bcrypt from 'bcryptjs';
+import { prisma } from ".prisma/client";
 
 const userResolver: Resolvers<Context> = {
 
@@ -19,7 +20,7 @@ const userResolver: Resolvers<Context> = {
 
                 return users;
             } catch (error) {
-                throw new ApolloError('Error while fetching user', 'INTERNAL_SERVER_ERROR');
+                throw new ApolloError('Error while fetching users', 'INTERNAL_SERVER_ERROR');
             }
         },
 
@@ -109,7 +110,19 @@ const userResolver: Resolvers<Context> = {
                 const password = await hashPassword(userInput.password!);
 
 
-                const profileId: number = userInput.profile?.id ? userInput.profile.id : 1
+                let profileId: string = '';
+
+                if (userInput.profile && userInput.profile.id) {
+                    profileId = userInput.profile.id;
+                } else {
+                    const profile = await context.prisma.profile.findUnique({
+                        where: {
+                            name: 'client'
+                        }
+                    })
+
+                    profileId = profile?.id!;
+                }
 
                 const user = await context.prisma.user.create({
                     data: {

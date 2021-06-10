@@ -4,7 +4,7 @@ const productSchema = {
     types: `#graphql
 
         type Product {
-        id: Int
+        id: String
         name: String
         price: Float
         category: Category
@@ -13,7 +13,7 @@ const productSchema = {
 
     inputs: `#graphql
         input ProductInput {
-        id: Int
+        id: String
         name: String
         price: Float
         category: CategoryInput
@@ -22,12 +22,12 @@ const productSchema = {
 
     queries: `#graphql
         products: [Product!]!
-        product(productInput: ProductInput!): Product
+        product(productId: String!): Product
     `,
 
     mutations: `#graphql
-        saveProduct(saveInput: ProductInput!): Product
-        deleteProduct(productId: Int!): Boolean
+        saveProduct(productInput: ProductInput!): Product
+        deleteProduct(productId: String!): Boolean
     `,
 }
 

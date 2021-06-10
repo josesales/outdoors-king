@@ -2,9 +2,8 @@
 const userSchema = {
 
     types: `#graphql
-
         type User {
-            id: Int
+            id: String
             email: String
             name: String
             password: String
@@ -19,9 +18,8 @@ const userSchema = {
     `,
 
     inputs: `#graphql
-
         input UserInput {
-            id: Int
+            id: String
             email: String    
             name: String
             password: String
@@ -36,7 +34,6 @@ const userSchema = {
     `,
 
     queries: `#graphql
-
         users: [User!]!
         user(userInput: UserInput!): User
         login(loginInput: LoginInput): Auth

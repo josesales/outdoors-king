@@ -1,0 +1,15 @@
+mutation {
+    saveProduct(productInput: {name: "Kite Board" price: 90.80 category:{id:"ckprail6y0000psuuqlscin1r"}}) {
+   		id
+    name
+    price
+       category{
+        id
+        name
+      }
+    }
+}
+
+mutation {
+	deleteProduct(productId: "ckprb869m0104uwuufwlfiecx")
+} 

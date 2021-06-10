@@ -26,6 +26,19 @@ export enum CacheControlScope {
   Private = 'PRIVATE'
 }
 
+/** graphql */
+export type Category = {
+  __typename?: 'Category';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** graphql */
+export type CategoryInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -35,6 +48,9 @@ export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<User>;
   resetPassword?: Maybe<Scalars['Boolean']>;
+  /** graphql */
+  saveProduct?: Maybe<Product>;
+  deleteProduct?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -48,24 +64,54 @@ export type MutationResetPasswordArgs = {
   userInput: UserInput;
 };
 
+
+export type MutationSaveProductArgs = {
+  productInput: ProductInput;
+};
+
+
+export type MutationDeleteProductArgs = {
+  productId: Scalars['String'];
+};
+
+export type Product = {
+  __typename?: 'Product';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  category?: Maybe<Category>;
+};
+
+/** graphql */
+export type ProductInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  category?: Maybe<CategoryInput>;
+};
+
 export type Profile = {
   __typename?: 'Profile';
-  id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type ProfileInput = {
-  id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  /** graphql */
   users: Array<User>;
   user?: Maybe<User>;
   login?: Maybe<Auth>;
   sendPasswordEmail?: Maybe<Scalars['Boolean']>;
   confirmPasswordResetCode?: Maybe<User>;
+  /** graphql */
+  products: Array<Product>;
+  product?: Maybe<Product>;
 };
 
 
@@ -89,17 +135,24 @@ export type QueryConfirmPasswordResetCodeArgs = {
   code: Scalars['Int'];
 };
 
+
+export type QueryProductArgs = {
+  productId: Scalars['String'];
+};
+
+/** graphql */
 export type User = {
   __typename?: 'User';
-  id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
   profile?: Maybe<Profile>;
 };
 
+/** graphql */
 export type UserInput = {
-  id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
@@ -188,9 +241,14 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   CacheControlScope: CacheControlScope;
+  Category: ResolverTypeWrapper<Category>;
+  CategoryInput: CategoryInput;
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Product: ResolverTypeWrapper<Product>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  ProductInput: ProductInput;
   Profile: ResolverTypeWrapper<Profile>;
   ProfileInput: ProfileInput;
   Query: ResolverTypeWrapper<{}>;
@@ -203,9 +261,14 @@ export type ResolversParentTypes = {
   Auth: Auth;
   String: Scalars['String'];
   Int: Scalars['Int'];
+  Category: Category;
+  CategoryInput: CategoryInput;
   LoginInput: LoginInput;
   Mutation: {};
   Boolean: Scalars['Boolean'];
+  Product: Product;
+  Float: Scalars['Float'];
+  ProductInput: ProductInput;
   Profile: Profile;
   ProfileInput: ProfileInput;
   Query: {};
@@ -225,13 +288,29 @@ export type AuthResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'userInput'>>;
   resetPassword?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'newPassword' | 'userInput'>>;
+  saveProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationSaveProductArgs, 'productInput'>>;
+  deleteProduct?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'productId'>>;
+};
+
+export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['Profile'] = ResolversParentTypes['Profile']> = {
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -242,10 +321,12 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   login?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<QueryLoginArgs, never>>;
   sendPasswordEmail?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QuerySendPasswordEmailArgs, 'email'>>;
   confirmPasswordResetCode?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryConfirmPasswordResetCodeArgs, 'email' | 'code'>>;
+  products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType>;
+  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, 'productId'>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -255,7 +336,9 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
+  Category?: CategoryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Product?: ProductResolvers<ContextType>;
   Profile?: ProfileResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

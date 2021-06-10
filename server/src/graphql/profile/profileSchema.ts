@@ -4,7 +4,7 @@ const profileSchema = {
     types: `#graphql
 
         type Profile {
-            id: Int
+            id: String
             name: String    
         }
     `,
@@ -12,7 +12,7 @@ const profileSchema = {
     inputs: `#graphql
     
         input ProfileInput {
-            id: Int
+            id: String
             name: String
         }
     `,

@@ -3,11 +3,15 @@ query {
     id
     email
     name
+    profile {
+      id
+      name
+    }
   }
 }
 
 query {
-  login(loginInput: {email:"sales1@sales4.com", password:"1234"}) {
+  login(loginInput: {email:"outdoors-king@email.com", password:"1234"}) {
    	token
     tokenExpiration
     user{
@@ -19,7 +23,7 @@ query {
 }
 
 query{
-  sendPasswordEmail(email: "salesbass@gmail.com")
+  sendPasswordEmail(email:"outdoors-king@email.com")
 }
 
 query{
