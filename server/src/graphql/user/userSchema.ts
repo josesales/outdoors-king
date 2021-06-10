@@ -1,5 +1,7 @@
 
-const userSchema = `#graphql
+const userSchema = {
+
+    types: `#graphql
 
         type User {
             id: Int
@@ -14,6 +16,9 @@ const userSchema = `#graphql
             token: String!
             tokenExpiration: Int!
         }
+    `,
+
+    inputs: `#graphql
 
         input UserInput {
             id: Int
@@ -28,21 +33,22 @@ const userSchema = `#graphql
             email: String!    
             password: String!
         }
+    `,
 
-        type Query {
-            users: [User!]!
-            user(userInput: UserInput!): User
-            login(loginInput: LoginInput): Auth
-            sendPasswordEmail(email: String!): Boolean
-            confirmPasswordResetCode(email: String!, code: Int!): User
-        }
-   
-        type Mutation {
-            createUser(userInput: UserInput!): User
-            resetPassword(newPassword: String! userInput: UserInput!): Boolean
-        }
-    `;
+    queries: `#graphql
 
+        users: [User!]!
+        user(userInput: UserInput!): User
+        login(loginInput: LoginInput): Auth
+        sendPasswordEmail(email: String!): Boolean
+        confirmPasswordResetCode(email: String!, code: Int!): User
+    `,
 
+    mutations: `#graphql
+
+        createUser(userInput: UserInput!): User
+        resetPassword(newPassword: String! userInput: UserInput!): Boolean
+    `,
+}
 
 export default userSchema;

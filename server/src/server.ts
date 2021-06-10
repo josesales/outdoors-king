@@ -4,6 +4,10 @@ import userSchema from './graphql/user/userSchema';
 import express from 'express';
 import UserResolver from './graphql/user/userResolver';
 import profileSchema from './graphql/profile/profileSchema';
+import productSchema from './graphql/product/productSchema';
+import categorySchema from './graphql/category/categorySchema';
+import rootSchema from './graphql/rootSchema';
+import rootResolver from './graphql/rootResolver';
 
 (async () => {
 
@@ -13,8 +17,9 @@ import profileSchema from './graphql/profile/profileSchema';
   const prisma = new PrismaClient();
 
   const server = new ApolloServer({
-    typeDefs: [userSchema, profileSchema],
-    resolvers: [UserResolver],
+    typeDefs: rootSchema,
+    resolvers: rootResolver,
+    uploads: false,
 
     context: ({ req }) => ({
       prisma

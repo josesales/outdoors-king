@@ -1,15 +1,23 @@
-const categorySchema = `#graphql
 
-        type Profile {
-            id: Int
-            name: String    
-        }
+const categorySchema = {
 
-        input ProfileInput {
-            id: Int
-            name: String
-        }
+    types: `#graphql
+        type Category {
+                id: Int
+                name: String    
+            }
+    `,
 
-    `;
+    inputs: `#graphql
+        input CategoryInput {
+                id: Int
+                name: String
+            }
+    `,
+
+    queries: ``,
+
+    mutations: ``,
+}
 
 export default categorySchema;
