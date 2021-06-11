@@ -2,14 +2,23 @@ import { ApolloError, UserInputError } from "apollo-server-errors";
 import { Resolvers, Product } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import { validate } from "./productUtil";
+import { validateAdminUser, validateAuthenticatedUser } from "../../permissions/permission";
 
 const productResolver: Resolvers<Context> = {
 
     Query: {
-        products: async (parent, args, context): Promise<Product[]> => {
+        products: async (parent, { productInput }, context): Promise<Product[]> => {
             try {
 
+                // validateAuthenticatedUser(context);
+                // await validateAdminUser(context);
+                let filter = {};
+                if (productInput) {
+                    filter = productInput;
+                }
+
                 const products: Product[] = await context.prisma.product.findMany({
+                    where: filter,
                     include: {
                         category: true
                     }
@@ -17,7 +26,7 @@ const productResolver: Resolvers<Context> = {
 
                 return products;
             } catch (error) {
-                throw new ApolloError('Error while fetching user', 'INTERNAL_SERVER_ERROR');
+                throw new ApolloError('Error while fetching products: ' + error.message, 'INTERNAL_SERVER_ERROR');
             }
         },
 

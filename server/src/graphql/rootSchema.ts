@@ -2,6 +2,7 @@ import categorySchema from "./category/categorySchema";
 import productSchema from "./product/productSchema";
 import profileSchema from "./profile/profileSchema";
 import userSchema from "./user/userSchema";
+import checkoutSchema from "./checkout/checkoutSchema";
 
 const types: String[] = [];
 const inputs: String[] = [];
@@ -9,7 +10,7 @@ const queries: String[] = [];
 const mutations: String[] = [];
 
 //each new schema should be included in the schemas array
-const schemas = [userSchema, profileSchema, productSchema, categorySchema];
+const schemas = [userSchema, profileSchema, productSchema, categorySchema, checkoutSchema];
 
 //combine all types, inputs, queries and mutations from each schema object
 schemas.forEach(schema => {

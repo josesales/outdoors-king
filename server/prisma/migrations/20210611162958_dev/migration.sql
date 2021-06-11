@@ -70,6 +70,9 @@ CREATE UNIQUE INDEX "profile.name_unique" ON "profile"("name");
 CREATE UNIQUE INDEX "user.email_unique" ON "user"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "user.token_unique" ON "user"("token");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "passwordResetKey" ON "user"("id", "name", "email");
 
 -- CreateIndex
@@ -77,9 +80,6 @@ CREATE UNIQUE INDEX "password-reset.user_unique" ON "password-reset"("user");
 
 -- AddForeignKey
 ALTER TABLE "password-reset" ADD FOREIGN KEY ("user") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "user" ADD FOREIGN KEY ("profile") REFERENCES "profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "cart" ADD FOREIGN KEY ("user") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -92,3 +92,6 @@ ALTER TABLE "cart-product" ADD FOREIGN KEY ("product") REFERENCES "product"("id"
 
 -- AddForeignKey
 ALTER TABLE "product" ADD FOREIGN KEY ("category") REFERENCES "category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user" ADD FOREIGN KEY ("profile") REFERENCES "profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;

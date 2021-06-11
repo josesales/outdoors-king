@@ -21,7 +21,7 @@ const productSchema = {
     `,
 
     queries: `#graphql
-        products: [Product!]!
+        products(productInput: ProductInput): [Product!]!
         product(productId: String!): Product
     `,
 

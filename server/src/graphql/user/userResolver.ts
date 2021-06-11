@@ -3,7 +3,6 @@ import { validate, hashPassword, generateToken, sendPasswordEmail } from "./user
 import { Resolvers, User, Auth } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import bcrypt from 'bcryptjs';
-import { prisma } from ".prisma/client";
 
 const userResolver: Resolvers<Context> = {
 
