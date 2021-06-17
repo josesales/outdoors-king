@@ -58,7 +58,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createUser?: Maybe<User>;
+  saveUser?: Maybe<User>;
   resetPassword?: Maybe<Scalars['Boolean']>;
   /** graphql */
   saveProduct?: Maybe<Product>;
@@ -68,7 +68,7 @@ export type Mutation = {
 };
 
 
-export type MutationCreateUserArgs = {
+export type MutationSaveUserArgs = {
   userInput: UserInput;
 };
 
@@ -123,9 +123,9 @@ export type ProfileInput = {
 export type Query = {
   __typename?: 'Query';
   /** graphql */
-  users: Array<User>;
   user?: Maybe<User>;
-  login?: Maybe<Auth>;
+  login?: Maybe<User>;
+  logout?: Maybe<Scalars['Boolean']>;
   sendPasswordEmail?: Maybe<Scalars['Boolean']>;
   confirmPasswordResetCode?: Maybe<User>;
   /** graphql */
@@ -134,13 +134,13 @@ export type Query = {
 };
 
 
-export type QueryUserArgs = {
-  userInput: UserInput;
+export type QueryLoginArgs = {
+  loginInput?: Maybe<LoginInput>;
 };
 
 
-export type QueryLoginArgs = {
-  loginInput?: Maybe<LoginInput>;
+export type QueryLogoutArgs = {
+  id?: Maybe<Scalars['String']>;
 };
 
 
@@ -171,6 +171,7 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
   profile?: Maybe<Profile>;
 };
 
@@ -329,7 +330,7 @@ export type CheckoutResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'userInput'>>;
+  saveUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'userInput'>>;
   resetPassword?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'newPassword' | 'userInput'>>;
   saveProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationSaveProductArgs, 'productInput'>>;
   deleteProduct?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'productId'>>;
@@ -351,9 +352,9 @@ export type ProfileResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'userInput'>>;
-  login?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<QueryLoginArgs, never>>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryLoginArgs, never>>;
+  logout?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryLogoutArgs, never>>;
   sendPasswordEmail?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QuerySendPasswordEmailArgs, 'email'>>;
   confirmPasswordResetCode?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryConfirmPasswordResetCodeArgs, 'email' | 'code'>>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductsArgs, never>>;
@@ -365,6 +366,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

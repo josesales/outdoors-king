@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import globalStyles from '../globalStyles';
-import Category from '../interfaces/category';
+import Category from '../interfaces/models/category';
 import { categoriesList } from '../testData/category';
 
 const CategoryDropdown = () => {

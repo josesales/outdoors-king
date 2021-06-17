@@ -25,8 +25,8 @@ export const auth = async (token: string, prisma: PrismaClient) => {
         });
 
     } catch (error) {
+        //It may end up in the catch if the token is expired so user has to login again
         user = null;
-        throw new ApolloError(`Error while creating user: ${error.message}`, 'INTERNAL_SERVER_ERROR');
     } finally {
         return user;
     }

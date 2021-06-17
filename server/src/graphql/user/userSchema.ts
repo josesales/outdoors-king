@@ -7,6 +7,7 @@ const userSchema = {
             email: String
             name: String
             password: String
+            token: String
             profile: Profile
         }
         
@@ -34,16 +35,16 @@ const userSchema = {
     `,
 
     queries: `#graphql
-        users: [User!]!
-        user(userInput: UserInput!): User
-        login(loginInput: LoginInput): Auth
+        user: User
+        login(loginInput: LoginInput): User
+        logout(id: String): Boolean
         sendPasswordEmail(email: String!): Boolean
         confirmPasswordResetCode(email: String!, code: Int!): User
     `,
 
     mutations: `#graphql
 
-        createUser(userInput: UserInput!): User
+        saveUser(userInput: UserInput!): User
         resetPassword(newPassword: String! userInput: UserInput!): Boolean
     `,
 }

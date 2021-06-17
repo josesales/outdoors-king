@@ -1,4 +1,4 @@
-import Product from "./product";
+import Product from "../models/product";
 
 interface ProductLocation {
     product?: Product,

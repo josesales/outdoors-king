@@ -1,8 +1,7 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router';
 import CategoryProducts from '../components/CategoryProducts';
-import globalStyles from '../globalStyles';
-import CategoryLocation from '../interfaces/categoryLocation';
+import CategoryLocation from '../interfaces/location/categoryLocation';
 
 const Category = () => {
 

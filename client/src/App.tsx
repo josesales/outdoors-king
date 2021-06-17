@@ -4,13 +4,14 @@ import './App.css';
 import Header from './components/Header';
 import Loader from './components/Loader';
 import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import PasswordReset from './pages/PasswordReset';
-import Checkout from './pages/Checkout';
-import Category from './pages/Category';
-import User from './pages/User';
-import Product from './pages/Product';
+
+const SignIn = lazy(() => import('./pages/SignIn'));
+const SignUp = lazy(() => import('./pages/SignUp'));
+const PasswordReset = lazy(() => import('./pages/PasswordReset'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const Category = lazy(() => import('./pages/Category'));
+const User = lazy(() => import('./pages/User'));
+const Product = lazy(() => import('./pages/Product'));
 
 function App(): JSX.Element {
 

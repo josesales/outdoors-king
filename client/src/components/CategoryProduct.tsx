@@ -1,6 +1,6 @@
 import React from 'react';
 import globalStyles from '../globalStyles';
-import Product from '../interfaces/product';
+import Product from '../interfaces/models/product';
 
 const CategoryProduct = ({ product }: { product?: Product, minified?: boolean }) => {
 
@@ -20,7 +20,8 @@ const CategoryProduct = ({ product }: { product?: Product, minified?: boolean })
                             {product.name}
                         </span>
 
-                        <img src={product.image} className="w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none" />
+                        <img src={product.image} alt="Product"
+                            className="w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none" />
 
                         <div className="w-full flex flex-col justify-center items-center">
 
@@ -28,7 +29,8 @@ const CategoryProduct = ({ product }: { product?: Product, minified?: boolean })
                                 $ {product.price}
                             </span>
 
-                            <span className={`mt-2 cursor-pointer ${globalStyles.borderBottomHover} ${globalStyles.textDefault}`}>
+                            <span onClick={onAddToCartClick}
+                                className={`mt-2 cursor-pointer ${globalStyles.borderBottomHover} ${globalStyles.textDefault}`}>
                                 Add to Cart
                             </span>
                         </div>

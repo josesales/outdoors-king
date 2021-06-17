@@ -1,14 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express'
-import userSchema from './graphql/user/userSchema';
 import express from 'express';
-import UserResolver from './graphql/user/userResolver';
-import profileSchema from './graphql/profile/profileSchema';
-import productSchema from './graphql/product/productSchema';
-import categorySchema from './graphql/category/categorySchema';
 import rootSchema from './graphql/rootSchema';
 import rootResolver from './graphql/rootResolver';
 import { auth } from './middleware/auth';
+import cors from './middleware/cors';
+import { GraphQLError } from 'graphql';
 
 (async () => {
 
@@ -21,13 +18,21 @@ import { auth } from './middleware/auth';
     typeDefs: rootSchema,
     resolvers: rootResolver,
     uploads: false,
+    debug: false,
 
     context: async ({ req }) => {
 
       const user = (req as any).user ? (req as any).user : null;
       return { prisma, user }
     },
+
+    formatError: (error: GraphQLError) => {
+
+      return new GraphQLError(error.message);
+    },
   });
+
+  app.use(cors);
 
   app.use(async (req, _, next) => {
     try {
@@ -42,7 +47,7 @@ import { auth } from './middleware/auth';
   });
 
 
-  server.applyMiddleware({ app, cors: false })
+  server.applyMiddleware({ cors: true, app })
 
   app.listen(port, () => {
 

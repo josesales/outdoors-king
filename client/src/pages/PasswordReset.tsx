@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import globalStyles from '../globalStyles';
-import User from '../interfaces/user';
 import HTML_ENTITIES from '../utils/htmlEntities';
 
 const PasswordReset = (): JSX.Element => {

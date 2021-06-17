@@ -1,7 +1,7 @@
 import React from 'react';
 import globalStyles from '../globalStyles';
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
-import CartProduct from '../interfaces/cartProduct';
+import CartProduct from '../interfaces/models/cartProduct';
 import HTML_ENTITIES from '../utils/htmlEntities';
 
 const CheckoutProduct = ({ cartProduct }: { cartProduct: CartProduct }) => {

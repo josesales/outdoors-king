@@ -10,8 +10,6 @@ const productResolver: Resolvers<Context> = {
         products: async (parent, { productInput }, context): Promise<Product[]> => {
             try {
 
-                // validateAuthenticatedUser(context);
-                // await validateAdminUser(context);
                 let filter = {};
                 if (productInput) {
                     filter = productInput;
@@ -57,6 +55,8 @@ const productResolver: Resolvers<Context> = {
         saveProduct: async (parent, { productInput }, context): Promise<Product> => {
             try {
 
+                await validateAdminUser(context);
+
                 if (!productInput) {
                     throw new UserInputError('Please provide inputs');
                 }
@@ -95,6 +95,8 @@ const productResolver: Resolvers<Context> = {
 
         deleteProduct: async (parent, { productId }, context): Promise<boolean> => {
             try {
+
+                await validateAdminUser(context);
 
                 if (!productId) {
                     throw new UserInputError('Please provide inputs');

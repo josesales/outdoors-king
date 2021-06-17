@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import globalStyles from '../globalStyles';
-import Category from '../interfaces/category';
+import Category from '../interfaces/models/category';
 import CategoryProduct from './CategoryProduct';
 
 const CategoryProducts = ({ category, minified }: { category: Category, minified?: boolean }) => {
@@ -42,7 +42,7 @@ const CategoryProducts = ({ category, minified }: { category: Category, minified
                                 <span onClick={showAllProducts} className={`cursor-pointer mb-8 sm:mr-8 
                                 ${globalStyles.textBig} ${globalStyles.borderBottomHover}`}>
                                     See more...
-                            </span> : null
+                                </span> : null
                         }
                     </div>
                     : ''

@@ -3,27 +3,23 @@ import { validate, hashPassword, generateToken, sendPasswordEmail } from "./user
 import { Resolvers, User, Auth } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import bcrypt from 'bcryptjs';
+import { validateAuthenticatedUser } from "../../permissions/permission";
 
 const userResolver: Resolvers<Context> = {
 
     Query: {
 
-        users: async (parent, args, context): Promise<User[]> => {
+        user: async (parent, args, context): Promise<User> => {
             try {
 
-                const users: User[] = await context.prisma.user.findMany({
-                    include: {
-                        profile: true
-                    }
-                });
-
-                return users;
+                validateAuthenticatedUser(context);
+                return context.user;
             } catch (error) {
-                throw new ApolloError('Error while fetching users', 'INTERNAL_SERVER_ERROR');
+                throw new ApolloError('Error while fetching user: ' + error.message, 'INTERNAL_SERVER_ERROR');
             }
         },
 
-        login: async (parent, { loginInput }, context): Promise<Auth> => {
+        login: async (parent, { loginInput }, context): Promise<User> => {
             try {
 
                 if (!loginInput) {
@@ -49,16 +45,43 @@ const userResolver: Resolvers<Context> = {
                     throw new UserInputError('Invalid Credentials');
                 }
 
-                const token = await generateToken(loginInput.email, user.id, context);
+                user.token = await generateToken(loginInput.email, user.id, context);
 
-                return { user, token, tokenExpiration: 1 };
+                return user;
 
             } catch (error) {
-                throw new ApolloError('Error while doing login: ' + error.message, 'INTERNAL_SERVER_ERROR');
+                return new ApolloError(error.message, 'INTERNAL_SERVER_ERROR');
             }
         },
 
-        sendPasswordEmail: async (parent, { email }, context): Promise<boolean> => {
+        logout: async (_, { id }, context): Promise<boolean> => {
+            try {
+
+                if (!id) {
+                    throw new UserInputError('Please provide inputs');
+                }
+
+                const user = await context.prisma.user.update({
+                    data: {
+                        token: null
+                    },
+                    where: {
+                        id
+                    },
+                });
+
+                if (!user) {
+                    throw new UserInputError('Invalid Inputs');
+                }
+
+                return true;
+            } catch (error) {
+                throw new ApolloError(`Error while resetting password: ${error.message}`, error.code ? error.code :
+                    'INTERNAL_SERVER_ERROR');
+            }
+        },
+
+        sendPasswordEmail: async (_, { email }, context): Promise<boolean> => {
             try {
 
                 await sendPasswordEmail(email, context);
@@ -68,7 +91,7 @@ const userResolver: Resolvers<Context> = {
             }
         },
 
-        confirmPasswordResetCode: async (parent, { email, code }, context): Promise<User> => {
+        confirmPasswordResetCode: async (_, { email, code }, context): Promise<User> => {
             try {
 
                 const passwordReset = await context.prisma.passwordReset.findFirst({
@@ -94,20 +117,21 @@ const userResolver: Resolvers<Context> = {
         }
     },
 
-
-
     Mutation: {
-        createUser: async (parent, { userInput }, context): Promise<User> => {
+        saveUser: async (_, { userInput }, context): Promise<User> => {
             try {
 
                 if (!userInput) {
                     throw new UserInputError('Please provide inputs');
                 }
 
+                if (userInput.id) {
+                    validateAuthenticatedUser(context);
+                }
+
                 await validate(userInput, context);
 
                 const password = await hashPassword(userInput.password!);
-
 
                 let profileId: string = '';
 
@@ -123,16 +147,22 @@ const userResolver: Resolvers<Context> = {
                     profileId = profile?.id!;
                 }
 
-                const user = await context.prisma.user.create({
-                    data: {
-                        name: userInput.name!,
-                        email: userInput.email!,
-                        password,
-                        profile: {
-                            connect: {
-                                id: profileId
-                            }
+                const upsertData = {
+                    name: userInput.name!,
+                    email: userInput.email!,
+                    password,
+                    profile: {
+                        connect: {
+                            id: profileId
                         }
+                    }
+                }
+
+                const user = await context.prisma.user.upsert({
+                    create: upsertData,
+                    update: upsertData,
+                    where: {
+                        id: userInput.id ? userInput.id : ''
                     },
                     include: {
                         profile: true
@@ -148,7 +178,7 @@ const userResolver: Resolvers<Context> = {
             }
         },
 
-        resetPassword: async (parent, { newPassword, userInput }, context): Promise<boolean> => {
+        resetPassword: async (_, { newPassword, userInput }, context): Promise<boolean> => {
             try {
 
                 if (!newPassword || !userInput) {

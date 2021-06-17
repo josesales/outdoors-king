@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import HTML_ENTITIES from '../utils/htmlEntities';
 import globalStyles from '../globalStyles';
 
 const ToggleSwitch = ({ name, title, callback }: { name: string, title?: string, callback?: Function }): JSX.Element => {

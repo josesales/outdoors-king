@@ -1,6 +1,5 @@
 import React from 'react';
 import CategoryProducts from './CategoryProducts';
-import Category from '../interfaces/category';
 import { categoriesList } from '../testData/category';
 
 const Categories = () => {

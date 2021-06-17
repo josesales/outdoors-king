@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 import ToggleSwitch from '../components/ToggleSwitch';
 import globalStyles from '../globalStyles';
-import UserInterface from '../interfaces/user';
-import UserLocation from '../interfaces/userLocation';
+import UserInterface from '../interfaces/models/user';
+import UserLocation from '../interfaces/location/userLocation';
 
 const User = (): JSX.Element => {
 

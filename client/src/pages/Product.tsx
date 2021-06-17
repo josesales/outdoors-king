@@ -3,9 +3,9 @@ import { useLocation } from 'react-router';
 import ImageUpload from '../components/ImageUpload';
 import Select from '../components/Select';
 import globalStyles from '../globalStyles';
-import Category from '../interfaces/category';
-import ProductInterface from '../interfaces/product';
-import ProductLocation from '../interfaces/productLocation';
+import Category from '../interfaces/models/category';
+import ProductInterface from '../interfaces/models/product';
+import ProductLocation from '../interfaces/location/productLocation';
 import { categoriesList } from '../testData/category';
 
 const Product = (): JSX.Element => {

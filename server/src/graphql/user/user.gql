@@ -1,5 +1,5 @@
 query {
-  users {
+  user {
     id
     email
     name
@@ -36,7 +36,7 @@ query{
 }
 
 mutation {
-    createUser(userInput: {name: "Sales" email:"sales1@sales4.com", password:"1234"}) {
+    saveUser(userInput: {id:"ckpsmekxx00499cuum89vqisr" name: "test" email:"sales1@sales4.com", password:"1234"}) {
    		email
     	password
       profile {
