@@ -15,7 +15,8 @@ const categorySchema = {
             }
     `,
 
-    queries: ``,
+    queries: `#graphql
+        categories: [Category!]!`,
 
     mutations: ``,
 }

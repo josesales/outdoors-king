@@ -8,22 +8,21 @@ import sgMail from '@sendgrid/mail';
 
 export const validate = async (userInput: UserInput, context: Context) => {
 
-    if (userInput.id !== context.user.id) {
+    if (userInput.id && context.user && userInput.id !== context.user.id) {
         throw new UserInputError('You can only update your own user');
-    }
-
-    if (!userInput?.email) {
-        throw new UserInputError('Email is mandatory');
     }
 
     if (!userInput?.name) {
         throw new UserInputError('Name is mandatory');
     }
 
+    if (!userInput?.email) {
+        throw new UserInputError('Email is mandatory');
+    }
+
     if (!userInput.password) {
         throw new UserInputError('Password is mandatory');
     }
-
 
     const userDB = await context.prisma.user.findUnique({
         where: { email: userInput.email },

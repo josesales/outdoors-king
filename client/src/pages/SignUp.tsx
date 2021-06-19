@@ -3,8 +3,10 @@ import { useHistory } from 'react-router';
 import Loader from '../components/Loader';
 import globalStyles from '../globalStyles';
 import User from '../interfaces/models/user';
-import { useAppDispatch } from '../redux/hooks';
-import { save } from '../redux/user/userAsyncActions';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { displayMessage } from '../redux/message/messageReducer';
+import DisplayMessage from '../components/DisplayMessage';
+import { signUp } from '../redux/user/userAsyncActions';
 import HTML_ENTITIES from '../utils/htmlEntities';
 
 const SignUp = (): JSX.Element => {
@@ -21,6 +23,7 @@ const SignUp = (): JSX.Element => {
 
     const history = useHistory();
     const dispatch = useAppDispatch();
+    const { type, message } = useAppSelector(state => state.message);
 
     const onUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = event.target;
@@ -37,49 +40,57 @@ const SignUp = (): JSX.Element => {
     }
 
     const onSignUpClick = async () => {
-        try {
-            setLoading(true);
-            dispatch(save(user));
-        } catch (error) {
-            console.log(error);
-            alert(error.message);
-        } finally {
-            setLoading(false);
+
+        if (user.password !== confirmPassword) {
+            dispatch(displayMessage({ type: 'error', message: "Passwords don't match" }));
+            return;
         }
+
+        await setLoading(true);
+        await dispatch(signUp(user));
+        setLoading(false);
     }
 
     return (
-        <div className={globalStyles.pageContainer}>
-            {loading ? <Loader /> :
+        <form>
 
-                <React.Fragment>
-                    <h2 className={globalStyles.title}>Sign Up</h2>
+            <div className={globalStyles.pageContainer}>
+                {loading ? <Loader /> :
 
-                    <input type="text" name="name" placeholder="Name" required value={user.name} autoComplete="off"
-                        className={globalStyles.input} onChange={onUserChange} />
+                    <React.Fragment>
 
-                    <input type="email" name="email" placeholder="Email" required value={user.email}
-                        autoComplete="off" className={globalStyles.input} onChange={onUserChange} />
+                        {
+                            type && message ? <DisplayMessage type={type} message={message} /> : null
+                        }
 
-                    <input type="password" name="password" placeholder="Password" required autoComplete="off"
-                        className={globalStyles.input} value={user.password} onChange={onUserChange} />
+                        <h2 className={globalStyles.title}>Sign Up</h2>
 
-                    <input type="password" placeholder="Confirm your Password" required autoComplete="off"
-                        className={globalStyles.input} value={confirmPassword} onChange={onConfirmPasswordChange} />
+                        <input type="text" name="name" placeholder="Name" required value={user.name} autoComplete="off"
+                            className={globalStyles.input} onChange={onUserChange} />
 
-                    <div className="flex justify-center items-center">
+                        <input type="email" name="email" placeholder="Email" required value={user.email}
+                            autoComplete="off" className={globalStyles.input} onChange={onUserChange} />
 
-                        <button title="Back to Login" onClick={onBackClick} className={`${globalStyles.button} mr-4 md:mr-10 `}>
-                            {HTML_ENTITIES.backArrow}
-                        </button>
+                        <input type="password" name="password" placeholder="Password" required autoComplete="off"
+                            className={globalStyles.input} value={user.password} onChange={onUserChange} />
 
-                        <button title="Create a new Account" onClick={onSignUpClick} className={globalStyles.button}>
-                            Sign Up
-                        </button>
-                    </div>
-                </React.Fragment>
-            }
-        </div>
+                        <input type="password" placeholder="Confirm your Password" required autoComplete="off"
+                            className={globalStyles.input} value={confirmPassword} onChange={onConfirmPasswordChange} />
+
+                        <div className="flex justify-center items-center">
+
+                            <button title="Back to Login" onClick={onBackClick} className={`${globalStyles.button} mr-4 md:mr-10 `}>
+                                {HTML_ENTITIES.backArrow}
+                            </button>
+
+                            <button title="Create a new Account" onClick={onSignUpClick} className={globalStyles.button}>
+                                Sign Up
+                            </button>
+                        </div>
+                    </React.Fragment>
+                }
+            </div>
+        </form>
     );
 }
 

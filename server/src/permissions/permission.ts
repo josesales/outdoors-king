@@ -1,5 +1,4 @@
 import { AuthenticationError } from "apollo-server-express";
-import { User } from "../graphql/generated/graphql-server";
 import Context from "../interfaces/context";
 
 export const validateAdminUser = async (context: Context) => {

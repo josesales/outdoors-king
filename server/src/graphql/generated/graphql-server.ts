@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Upload: any;
 };
 
 
@@ -51,6 +52,13 @@ export type CheckoutInput = {
   amount: Scalars['Float'];
 };
 
+export type File = {
+  __typename?: 'File';
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
+  encoding: Scalars['String'];
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -63,6 +71,7 @@ export type Mutation = {
   /** graphql */
   saveProduct?: Maybe<Product>;
   deleteProduct?: Maybe<Scalars['Boolean']>;
+  imageUpload: File;
   /** graphql */
   checkout?: Maybe<Scalars['Boolean']>;
 };
@@ -89,6 +98,12 @@ export type MutationDeleteProductArgs = {
 };
 
 
+export type MutationImageUploadArgs = {
+  productId: Scalars['String'];
+  file: Scalars['Upload'];
+};
+
+
 export type MutationCheckoutArgs = {
   checkoutInput: CheckoutInput;
 };
@@ -99,6 +114,7 @@ export type Product = {
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
   category?: Maybe<Category>;
+  image?: Maybe<Scalars['Upload']>;
 };
 
 /** graphql */
@@ -131,6 +147,8 @@ export type Query = {
   /** graphql */
   products: Array<Product>;
   product?: Maybe<Product>;
+  /** graphql */
+  categories: Array<Category>;
 };
 
 
@@ -163,6 +181,7 @@ export type QueryProductsArgs = {
 export type QueryProductArgs = {
   productId: Scalars['String'];
 };
+
 
 /** graphql */
 export type User = {
@@ -271,6 +290,7 @@ export type ResolversTypes = {
   Checkout: ResolverTypeWrapper<Checkout>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   CheckoutInput: CheckoutInput;
+  File: ResolverTypeWrapper<File>;
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -279,6 +299,7 @@ export type ResolversTypes = {
   Profile: ResolverTypeWrapper<Profile>;
   ProfileInput: ProfileInput;
   Query: ResolverTypeWrapper<{}>;
+  Upload: ResolverTypeWrapper<Scalars['Upload']>;
   User: ResolverTypeWrapper<User>;
   UserInput: UserInput;
 };
@@ -293,6 +314,7 @@ export type ResolversParentTypes = {
   Checkout: Checkout;
   Float: Scalars['Float'];
   CheckoutInput: CheckoutInput;
+  File: File;
   LoginInput: LoginInput;
   Mutation: {};
   Boolean: Scalars['Boolean'];
@@ -301,6 +323,7 @@ export type ResolversParentTypes = {
   Profile: Profile;
   ProfileInput: ProfileInput;
   Query: {};
+  Upload: Scalars['Upload'];
   User: User;
   UserInput: UserInput;
 };
@@ -329,11 +352,19 @@ export type CheckoutResolvers<ContextType = any, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
+  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   saveUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'userInput'>>;
   resetPassword?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'newPassword' | 'userInput'>>;
   saveProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationSaveProductArgs, 'productInput'>>;
   deleteProduct?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'productId'>>;
+  imageUpload?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationImageUploadArgs, 'productId' | 'file'>>;
   checkout?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationCheckoutArgs, 'checkoutInput'>>;
 };
 
@@ -342,6 +373,7 @@ export type ProductResolvers<ContextType = any, ParentType extends ResolversPare
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['Upload']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -359,7 +391,12 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   confirmPasswordResetCode?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryConfirmPasswordResetCodeArgs, 'email' | 'code'>>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductsArgs, never>>;
   product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, 'productId'>>;
+  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
 };
+
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload';
+}
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -375,10 +412,12 @@ export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
   Category?: CategoryResolvers<ContextType>;
   Checkout?: CheckoutResolvers<ContextType>;
+  File?: FileResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
   Profile?: ProfileResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
 };
 

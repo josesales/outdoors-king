@@ -1,12 +1,18 @@
 
-import { request } from 'graphql-request'
+import { GraphQLClient } from 'graphql-request'
 
-export const sendRequest = async (reqData: { queryName: string, query: string }, variables: any) => {
+export const sendRequest = async (reqData: { queryName: string, query: string }, variables: any = null, token?: string) => {
 
     try {
+        const client = new GraphQLClient('http://localhost:5000/graphql');
+
+        const requestHeaders = {
+            authorization: token ? `Bearer ${token}` : ''
+        }
 
         const { queryName, query } = reqData;
-        let data = await request('http://localhost:5000/graphql', query, variables);
+        let data = await client.request(query, variables, requestHeaders);
+        // let data = await request('http://localhost:5000/graphql', query, variables);
 
         data = data[queryName]
         return data;

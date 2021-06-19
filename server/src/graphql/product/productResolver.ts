@@ -1,8 +1,8 @@
 import { ApolloError, UserInputError } from "apollo-server-errors";
-import { Resolvers, Product } from "../generated/graphql-server";
+import { Resolvers, Product, File } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import { validate } from "./productUtil";
-import { validateAdminUser, validateAuthenticatedUser } from "../../permissions/permission";
+import { validateAdminUser } from "../../permissions/permission";
 
 const productResolver: Resolvers<Context> = {
 
@@ -116,6 +116,21 @@ const productResolver: Resolvers<Context> = {
                 throw new ApolloError(`Error while saving product: ${error.message}`, error.code ? error.code :
                     'INTERNAL_SERVER_ERROR');
             }
+        },
+
+        imageUpload: async (_, { file, productId }, context): Promise<File> => {
+            const { createReadStream, filename, mimetype, encoding } = await file;
+            const stream = createReadStream();
+
+            const product = await context.prisma.product.update({
+                data: {
+                    image: stream
+                },
+                where: {
+                    id: productId
+                }
+            })
+            return { filename, mimetype, encoding };
         },
     }
 }

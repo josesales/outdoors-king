@@ -27,7 +27,7 @@ model cartProduct {
 
 model category {
   id       String    @id @default(cuid())
-  name     String?   @db.VarChar(255)
+  name     String    @db.VarChar(255)
   products product[]
 }
 
@@ -38,6 +38,7 @@ model product {
   categoryId   String        @map("category")
   category     category      @relation(fields: [categoryId], references: [id])
   cartProducts cartProduct[]
+  image        Bytes?
 }
 
 model profile {

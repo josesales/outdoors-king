@@ -1,8 +1,8 @@
 import Product from "./product";
 
 interface Category {
-    id?: number,
-    name: string,
+    id?: string,
+    name?: string,
     products?: Array<Product>,
 }
 

@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 interface userState {
     currentUser?: User | null,
     token?: string | null,
+    confirmPassword?: { id?: string, name?: string, email: string } | null,
 }
 
 const state = {
     currentUser: null,
     token: null,
+    confirmPassword: null,
 } as userState
 
 export const userSlice = createSlice({
@@ -20,7 +22,7 @@ export const userSlice = createSlice({
             state.currentUser = action.payload;
             state.token = action.payload.token;
         },
-        save: (state, action: PayloadAction<User>) => {
+        signUp: (state, action: PayloadAction<User>) => {
             state.currentUser = action.payload;
             state.token = action.payload.token;
         },
@@ -28,9 +30,12 @@ export const userSlice = createSlice({
             state.currentUser = null;
             state.token = null;
         },
+        confirmPassword: (state, action: PayloadAction<User | null>) => {
+            state.confirmPassword = action.payload;
+        },
     }
 });
 
-export const { login, save, logout } = userSlice.actions;
+export const { login, signUp, logout, confirmPassword } = userSlice.actions;
 
 export default userSlice.reducer;

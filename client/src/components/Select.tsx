@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import globalStyles from '../globalStyles';
 
 interface Option {
-    id?: number,
-    name: string
+    id?: string,
+    name?: string
 }
 const Select = ({ initialValue, placeholder, title, options, callback }:
     { initialValue?: string, placeholder: string, title?: string, options: Option[], callback?: Function })
@@ -18,7 +18,7 @@ const Select = ({ initialValue, placeholder, title, options, callback }:
 
     const onOptionSelected = (option: Option) => {
 
-        setText(option.name);
+        setText(option.name!);
         setIsVisible(false);
 
         if (callback) {

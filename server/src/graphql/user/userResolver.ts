@@ -3,7 +3,7 @@ import { validate, hashPassword, generateToken, sendPasswordEmail } from "./user
 import { Resolvers, User, Auth } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import bcrypt from 'bcryptjs';
-import { validateAuthenticatedUser } from "../../permissions/permission";
+import { validateAdminUser, validateAuthenticatedUser } from "../../permissions/permission";
 
 const userResolver: Resolvers<Context> = {
 
@@ -84,10 +84,22 @@ const userResolver: Resolvers<Context> = {
         sendPasswordEmail: async (_, { email }, context): Promise<boolean> => {
             try {
 
+                if (!email) {
+                    throw new UserInputError('Please provide email');
+                }
+
+                const userDB = await context.prisma.user.findUnique({
+                    where: { email },
+                });
+
+                if (!userDB) {
+                    throw new UserInputError('Email is not in the system');
+                }
+
                 await sendPasswordEmail(email, context);
                 return true;
             } catch (error) {
-                throw new ApolloError('Error sending email: ' + error.message, 'INTERNAL_SERVER_ERROR');
+                throw new ApolloError(error.message, 'INTERNAL_SERVER_ERROR');
             }
         },
 
@@ -112,7 +124,7 @@ const userResolver: Resolvers<Context> = {
 
                 return passwordReset.user;
             } catch (error) {
-                throw new ApolloError('Error sending email: ' + error.message, 'INTERNAL_SERVER_ERROR');
+                throw new ApolloError(error.message, 'INTERNAL_SERVER_ERROR');
             }
         }
     },
@@ -134,18 +146,20 @@ const userResolver: Resolvers<Context> = {
                 const password = await hashPassword(userInput.password!);
 
                 let profileId: string = '';
+                let profileName: string = 'client';
 
-                if (userInput.profile && userInput.profile.id) {
-                    profileId = userInput.profile.id;
-                } else {
-                    const profile = await context.prisma.profile.findUnique({
-                        where: {
-                            name: 'client'
-                        }
-                    })
-
-                    profileId = profile?.id!;
+                if (userInput.profile?.name?.toLowerCase() === 'admin') {
+                    await validateAdminUser(context);
+                    profileName = 'admin'
                 }
+
+                const profile = await context.prisma.profile.findUnique({
+                    where: {
+                        name: profileName
+                    }
+                });
+
+                profileId = profile?.id!;
 
                 const upsertData = {
                     name: userInput.name!,
@@ -171,9 +185,8 @@ const userResolver: Resolvers<Context> = {
 
                 user.token = await generateToken(userInput.email!, user.id, context);
                 return user;
-
             } catch (error) {
-                throw new ApolloError(`Error while creating user: ${error.message}`, error.code ? error.code :
+                throw new ApolloError(error.message, error.code ? error.code :
                     'INTERNAL_SERVER_ERROR');
             }
         },

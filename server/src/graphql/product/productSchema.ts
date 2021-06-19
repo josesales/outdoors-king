@@ -3,11 +3,20 @@ const productSchema = {
 
     types: `#graphql
 
-        type Product {
+    scalar Upload
+
+    type File {
+        filename: String!
+        mimetype: String!
+        encoding: String!
+    }
+    
+    type Product {
         id: String
         name: String
         price: Float
         category: Category
+        image: Upload
     }
     `,
 
@@ -28,6 +37,7 @@ const productSchema = {
     mutations: `#graphql
         saveProduct(productInput: ProductInput!): Product
         deleteProduct(productId: String!): Boolean
+        imageUpload(productId: String! file: Upload!): File!
     `,
 }
 
