@@ -9,7 +9,7 @@ datasource db {
 
 model cart {
   id           String        @id @default(cuid())
-  userId       String        @map("user")
+  userId       String?       @map("user")
   user         user?         @relation(fields: [userId], references: [id])
   cartProducts cartProduct[]
 }
@@ -38,7 +38,7 @@ model product {
   categoryId   String        @map("category")
   category     category      @relation(fields: [categoryId], references: [id])
   cartProducts cartProduct[]
-  image        Bytes?
+  image        String?
 }
 
 model profile {

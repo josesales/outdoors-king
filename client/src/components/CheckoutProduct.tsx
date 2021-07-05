@@ -24,7 +24,11 @@ const CheckoutProduct = ({ cartProduct }: { cartProduct: CartProduct }) => {
         <div className={`${globalStyles.checkout.content.container}`}>
 
             <div className={`${globalStyles.checkout.default}`}>
-                <img src={product?.image} alt='item' className={`${globalStyles.checkout.content.image}`} />
+                {
+                    product?.image ?
+                        <img src={product.image.toString()} alt='item' className={`${globalStyles.checkout.content.image}`} />
+                        : ''
+                }
             </div>
 
             <span className={`${globalStyles.textDefault} ${globalStyles.checkout.big}`}>{product?.name}</span>

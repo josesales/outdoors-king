@@ -1,4 +1,3 @@
-import User from '../../interfaces/models/user';
 import { sendRequest } from '../../graphql/request-sender';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../store';

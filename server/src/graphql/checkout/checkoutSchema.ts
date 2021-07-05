@@ -20,7 +20,7 @@ const productSchema = {
     `,
 
     mutations: `#graphql
-        checkout(checkoutInput: CheckoutInput!): Boolean
+        checkout(checkoutInput: CheckoutInput! userId: String): Boolean
     `,
 }
 

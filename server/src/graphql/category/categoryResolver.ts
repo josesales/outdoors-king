@@ -1,6 +1,5 @@
-import { Resolvers } from "../generated/graphql-server";
+import { Category, Resolvers } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
-import Category from "../../../../client/src/interfaces/models/category";
 import { ApolloError } from "apollo-server-errors";
 
 const categoryResolver: Resolvers<Context> = {
@@ -9,7 +8,15 @@ const categoryResolver: Resolvers<Context> = {
         categories: async (_, args, context): Promise<Category[]> => {
             try {
 
-                const categoriesDb = await context.prisma.category.findMany();
+                const categoriesDb: Category[] = await context.prisma.category.findMany({
+                    select: {
+                        id: true,
+                        name: true,
+                        products: {
+                            take: 3
+                        },
+                    },
+                });
                 return categoriesDb;
 
             } catch (error) {

@@ -27,11 +27,27 @@ export enum CacheControlScope {
   Private = 'PRIVATE'
 }
 
+export type Cart = {
+  __typename?: 'Cart';
+  id?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
+  cartProducts?: Maybe<Array<Maybe<CartProduct>>>;
+};
+
+export type CartProduct = {
+  __typename?: 'CartProduct';
+  id?: Maybe<Scalars['String']>;
+  cart?: Maybe<Cart>;
+  product?: Maybe<Product>;
+  quantity?: Maybe<Scalars['Int']>;
+};
+
 /** graphql */
 export type Category = {
   __typename?: 'Category';
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  products?: Maybe<Array<Maybe<Product>>>;
 };
 
 /** graphql */
@@ -71,7 +87,7 @@ export type Mutation = {
   /** graphql */
   saveProduct?: Maybe<Product>;
   deleteProduct?: Maybe<Scalars['Boolean']>;
-  imageUpload: File;
+  imageUpload?: Maybe<Scalars['Boolean']>;
   /** graphql */
   checkout?: Maybe<Scalars['Boolean']>;
 };
@@ -94,18 +110,19 @@ export type MutationSaveProductArgs = {
 
 
 export type MutationDeleteProductArgs = {
-  productId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
 export type MutationImageUploadArgs = {
-  productId: Scalars['String'];
-  file: Scalars['Upload'];
+  id: Scalars['String'];
+  base64Image: Scalars['String'];
 };
 
 
 export type MutationCheckoutArgs = {
   checkoutInput: CheckoutInput;
+  userId?: Maybe<Scalars['String']>;
 };
 
 export type Product = {
@@ -149,6 +166,8 @@ export type Query = {
   product?: Maybe<Product>;
   /** graphql */
   categories: Array<Category>;
+  /** graphql */
+  cart?: Maybe<Cart>;
 };
 
 
@@ -179,7 +198,7 @@ export type QueryProductsArgs = {
 
 
 export type QueryProductArgs = {
-  productId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -285,6 +304,8 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   CacheControlScope: CacheControlScope;
+  Cart: ResolverTypeWrapper<Cart>;
+  CartProduct: ResolverTypeWrapper<CartProduct>;
   Category: ResolverTypeWrapper<Category>;
   CategoryInput: CategoryInput;
   Checkout: ResolverTypeWrapper<Checkout>;
@@ -309,6 +330,8 @@ export type ResolversParentTypes = {
   Auth: Auth;
   String: Scalars['String'];
   Int: Scalars['Int'];
+  Cart: Cart;
+  CartProduct: CartProduct;
   Category: Category;
   CategoryInput: CategoryInput;
   Checkout: Checkout;
@@ -340,9 +363,25 @@ export type AuthResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CartResolvers<ContextType = any, ParentType extends ResolversParentTypes['Cart'] = ResolversParentTypes['Cart']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  cartProducts?: Resolver<Maybe<Array<Maybe<ResolversTypes['CartProduct']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CartProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['CartProduct'] = ResolversParentTypes['CartProduct']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  cart?: Resolver<Maybe<ResolversTypes['Cart']>, ParentType, ContextType>;
+  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType>;
+  quantity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -363,8 +402,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   saveUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'userInput'>>;
   resetPassword?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'newPassword' | 'userInput'>>;
   saveProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationSaveProductArgs, 'productInput'>>;
-  deleteProduct?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'productId'>>;
-  imageUpload?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationImageUploadArgs, 'productId' | 'file'>>;
+  deleteProduct?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'id'>>;
+  imageUpload?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationImageUploadArgs, 'id' | 'base64Image'>>;
   checkout?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationCheckoutArgs, 'checkoutInput'>>;
 };
 
@@ -390,8 +429,9 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   sendPasswordEmail?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QuerySendPasswordEmailArgs, 'email'>>;
   confirmPasswordResetCode?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryConfirmPasswordResetCodeArgs, 'email' | 'code'>>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductsArgs, never>>;
-  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, 'productId'>>;
+  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, 'id'>>;
   categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
+  cart?: Resolver<Maybe<ResolversTypes['Cart']>, ParentType, ContextType>;
 };
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
@@ -410,6 +450,8 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
+  Cart?: CartResolvers<ContextType>;
+  CartProduct?: CartProductResolvers<ContextType>;
   Category?: CategoryResolvers<ContextType>;
   Checkout?: CheckoutResolvers<ContextType>;
   File?: FileResolvers<ContextType>;

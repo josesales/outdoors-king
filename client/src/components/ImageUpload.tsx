@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ReactComponent as Upload } from "../assets/upload.svg";
 import globalStyles from '../globalStyles';
 
-const ImageUpload = ({ title }: { title: string }) => {
+const ImageUpload = ({ title, callback }: { title: string, callback?: Function }) => {
 
     const [base64Image, setBase64Image] = useState<string | ArrayBuffer>('');
 
@@ -18,6 +18,9 @@ const ImageUpload = ({ title }: { title: string }) => {
 
                     if (e && e.target && e.target.result) {
                         await setBase64Image(e.target.result);
+                        if (callback) {
+                            callback(e.target.result);
+                        }
                     }
                 }
                 setImg();

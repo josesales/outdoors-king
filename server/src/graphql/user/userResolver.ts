@@ -76,7 +76,8 @@ const userResolver: Resolvers<Context> = {
 
                 return true;
             } catch (error) {
-                throw new ApolloError(`Error while resetting password: ${error.message}`, error.code ? error.code :
+                console.log(error.message);
+                throw new ApolloError(error.message, error.code ? error.code :
                     'INTERNAL_SERVER_ERROR');
             }
         },
@@ -221,7 +222,7 @@ const userResolver: Resolvers<Context> = {
 
                 return true;
             } catch (error) {
-                throw new ApolloError(`Error while resetting password: ${error.message}`, error.code ? error.code :
+                throw new ApolloError(error.message, error.code ? error.code :
                     'INTERNAL_SERVER_ERROR');
             }
         },

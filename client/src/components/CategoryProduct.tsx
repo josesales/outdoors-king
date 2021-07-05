@@ -20,8 +20,12 @@ const CategoryProduct = ({ product }: { product?: Product, minified?: boolean })
                             {product.name}
                         </span>
 
-                        <img src={product.image} alt="Product"
-                            className="w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none" />
+                        {
+                            product.image ?
+                                <img src={product.image.toString()} alt="Product"
+                                    className="w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none" />
+                                : ''
+                        }
 
                         <div className="w-full flex flex-col justify-center items-center">
 

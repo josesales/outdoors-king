@@ -1,13 +1,13 @@
 import React from 'react';
 import CategoryProducts from './CategoryProducts';
-import { categoriesList } from '../testData/category';
+import { useAppSelector } from '../redux/hooks';
 
 const Categories = () => {
 
 
     let categoriesUi = null;
 
-    const categories = categoriesList;
+    const categories = useAppSelector(state => state.category.categories);
 
     if (categories) {
         categoriesUi = categories.map(category => <CategoryProducts

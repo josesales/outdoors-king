@@ -7,7 +7,7 @@ import { validateAdminUser } from "../../permissions/permission";
 const productResolver: Resolvers<Context> = {
 
     Query: {
-        products: async (parent, { productInput }, context): Promise<Product[]> => {
+        products: async (_, { productInput }, context): Promise<Product[]> => {
             try {
 
                 let filter = {};
@@ -28,12 +28,12 @@ const productResolver: Resolvers<Context> = {
             }
         },
 
-        product: async (parent, { productId }, context): Promise<Product> => {
+        product: async (_, { id }, context): Promise<Product> => {
             try {
 
                 const product = await context.prisma.product.findUnique({
                     where: {
-                        id: productId
+                        id
                     },
                     include: {
                         category: true
@@ -52,7 +52,7 @@ const productResolver: Resolvers<Context> = {
     },
 
     Mutation: {
-        saveProduct: async (parent, { productInput }, context): Promise<Product> => {
+        saveProduct: async (_, { productInput }, context): Promise<Product> => {
             try {
 
                 await validateAdminUser(context);
@@ -88,23 +88,23 @@ const productResolver: Resolvers<Context> = {
 
                 return product;
             } catch (error) {
-                throw new ApolloError(`Error while saving product: ${error.message}`, error.code ? error.code :
+                throw new ApolloError(error.message, error.code ? error.code :
                     'INTERNAL_SERVER_ERROR');
             }
         },
 
-        deleteProduct: async (parent, { productId }, context): Promise<boolean> => {
+        deleteProduct: async (_, { id }, context): Promise<boolean> => {
             try {
 
                 await validateAdminUser(context);
 
-                if (!productId) {
+                if (!id) {
                     throw new UserInputError('Please provide inputs');
                 }
 
                 const product = await context.prisma.product.delete({
                     where: {
-                        id: productId
+                        id
                     }
                 });
 
@@ -113,24 +113,29 @@ const productResolver: Resolvers<Context> = {
                 }
                 return false;
             } catch (error) {
-                throw new ApolloError(`Error while saving product: ${error.message}`, error.code ? error.code :
+                throw new ApolloError(error.message, error.code ? error.code :
                     'INTERNAL_SERVER_ERROR');
             }
         },
 
-        imageUpload: async (_, { file, productId }, context): Promise<File> => {
-            const { createReadStream, filename, mimetype, encoding } = await file;
-            const stream = createReadStream();
+        imageUpload: async (_, { id, base64Image }, context): Promise<boolean> => {
+            try {
 
-            const product = await context.prisma.product.update({
-                data: {
-                    image: stream
-                },
-                where: {
-                    id: productId
-                }
-            })
-            return { filename, mimetype, encoding };
+                await validateAdminUser(context);
+
+                await context.prisma.product.update({
+                    data: {
+                        image: base64Image
+                    },
+                    where: {
+                        id
+                    }
+                })
+                return true;
+            } catch (error) {
+                throw new ApolloError(error.message, error.code ? error.code :
+                    'INTERNAL_SERVER_ERROR');
+            }
         },
     }
 }

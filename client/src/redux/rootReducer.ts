@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage'
 import categoryReducer from './category/categoryReducer'
 import messageReducer from './message/messageReducer'
 import userReducer from './user/userReducer'
+import productReducer from './product/productReducer'
 
 
 const persistConfig = {
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     message: messageReducer,
     category: categoryReducer,
+    product: productReducer,
 })
 
 export default persistReducer(persistConfig, rootReducer)

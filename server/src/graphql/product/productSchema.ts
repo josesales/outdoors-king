@@ -31,13 +31,13 @@ const productSchema = {
 
     queries: `#graphql
         products(productInput: ProductInput): [Product!]!
-        product(productId: String!): Product
+        product(id: String!): Product
     `,
 
     mutations: `#graphql
         saveProduct(productInput: ProductInput!): Product
-        deleteProduct(productId: String!): Boolean
-        imageUpload(productId: String! file: Upload!): File!
+        deleteProduct(id: String!): Boolean
+        imageUpload(id: String! base64Image: String!): Boolean
     `,
 }
 

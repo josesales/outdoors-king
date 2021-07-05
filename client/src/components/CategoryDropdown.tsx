@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import globalStyles from '../globalStyles';
-import Category from '../interfaces/models/category';
-import { categoriesList } from '../testData/category';
+import { getCategories } from '../redux/category/categoryAsyncActions';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 const CategoryDropdown = () => {
 
     const [isVisible, setIsVisible] = useState(false);
 
     const history = useHistory();
+    const dispatch = useAppDispatch();
 
-    const categories: Array<Category> = categoriesList;
+    const categories = useAppSelector(state => state.category.categories);
 
-    const categoriesUi = categories.map(category =>
+    useEffect(() => {
+        dispatch(getCategories());
+    }, [dispatch])
+
+    const categoriesUi = categories!.map(category =>
         <li onClick={() => history.push('/category', { category })}
             key={category.id} className={globalStyles.headerDropdown.li}>{category.name}</li>);
 

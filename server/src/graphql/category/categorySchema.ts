@@ -4,7 +4,8 @@ const categorySchema = {
     types: `#graphql
         type Category {
                 id: String
-                name: String    
+                name: String  
+                products: [Product]  
             }
     `,
 

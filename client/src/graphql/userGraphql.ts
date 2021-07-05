@@ -26,32 +26,27 @@ export const loginQuery = (selectedFields?: string) => (
     }
 );
 
-export const logoutQuery = (
-    {
-        queryName: 'logout',
-        query: gql`
+export const logoutQuery = {
+    queryName: 'logout',
+    query: gql`
             query logoutQuery($id: String) {
                 logout(id: $id)
             }
         `
-    }
-);
+};
 
-export const sendPasswordEmailQuery = (
-    {
-        queryName: 'sendPasswordEmail',
-        query: gql`
+export const sendPasswordEmailQuery = {
+    queryName: 'sendPasswordEmail',
+    query: gql`
             query sendPasswordEmailQuery($email: String!) {
                 sendPasswordEmail(email: $email)
             }
         `
-    }
-);
+};
 
-export const confirmPasswordResetCodeQuery = (
-    {
-        queryName: 'confirmPasswordResetCode',
-        query: gql`
+export const confirmPasswordResetCodeQuery = {
+    queryName: 'confirmPasswordResetCode',
+    query: gql`
             query confirmPasswordResetCodeQuery($email: String!, $code: Int!) {
                 confirmPasswordResetCode(email: $email, code: $code) {
                     id
@@ -59,8 +54,7 @@ export const confirmPasswordResetCodeQuery = (
                 }
             }
         `
-    }
-);
+};
 
 export const saveUserMutation = (selectedFields?: string) => (
     {
@@ -75,13 +69,11 @@ export const saveUserMutation = (selectedFields?: string) => (
     }
 );
 
-export const resetPasswordMutation = (
-    {
-        queryName: 'resetPassword',
-        query: gql`
+export const resetPasswordMutation = {
+    queryName: 'resetPassword',
+    query: gql`
             mutation resetPasswordMutation($newPassword: String!, $userInput: UserInput!) {
                 resetPassword(newPassword: $newPassword userInput: $userInput)
             }
         `
-    }
-);
+};

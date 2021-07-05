@@ -29,13 +29,16 @@ export const login = (loginInput: User): ThunkAction<void, RootState, unknown, A
 export const logout = (id: string): ThunkAction<void, RootState, unknown, AnyAction> => {
 
     return async dispatch => {
+
+        let user: User = { id, email: '' }
+
         try {
+            user = await sendRequest(logoutQuery, { id });
 
-            const user: User = await sendRequest(logoutQuery, { id });
-
-            dispatch(logoutAction(user));
         } catch (error) {
-            throw new Error(error.message);
+            console.log(error.message);
+        } finally {
+            dispatch(logoutAction(user))
         }
     };
 };

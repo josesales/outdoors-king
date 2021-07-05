@@ -12,7 +12,7 @@ const DisplayMessage = ({ type, message }: { type: string, message: string }): J
         setTimeout(() => {
             dispatch(displayMessage({ type: null, message: null }))
             setOnDisplay(false);
-        }, 5000)
+        }, 10000)
     }, [dispatch])
 
 

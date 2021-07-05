@@ -6,6 +6,7 @@ import rootResolver from './graphql/rootResolver';
 import { auth } from './middleware/auth';
 import cors from './middleware/cors';
 import { GraphQLError } from 'graphql';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 (async () => {
 
@@ -32,6 +33,8 @@ import { GraphQLError } from 'graphql';
     },
   });
 
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+
   app.use(cors);
 
   app.use(async (req, _, next) => {
@@ -45,7 +48,6 @@ import { GraphQLError } from 'graphql';
       throw new AuthenticationError('you must be logged in');
     }
   });
-
 
   server.applyMiddleware({ cors: true, app })
 
