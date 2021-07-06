@@ -122,7 +122,6 @@ export type MutationImageUploadArgs = {
 
 export type MutationCheckoutArgs = {
   checkoutInput: CheckoutInput;
-  userId?: Maybe<Scalars['String']>;
 };
 
 export type Product = {

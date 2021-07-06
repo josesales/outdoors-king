@@ -64,11 +64,6 @@ const Product = (): JSX.Element => {
         //convert from string to number
         product.price = +product.price!;
 
-        // if (user.password !== confirmPassword) {
-        //     dispatch(displayMessage({ type: 'error', message: "Passwords don't match" }));
-        //     return;
-        // }
-
         await setLoading(true);
         await dispatch(save(product, productImage, currentUser!.token));
         setLoading(false);

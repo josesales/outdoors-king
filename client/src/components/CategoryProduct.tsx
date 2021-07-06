@@ -1,11 +1,15 @@
 import React from 'react';
 import globalStyles from '../globalStyles';
 import Product from '../interfaces/models/product';
+import { addProduct } from '../redux/cart/cartReducer';
+import { useAppDispatch } from '../redux/hooks';
 
-const CategoryProduct = ({ product }: { product?: Product, minified?: boolean }) => {
+const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) => {
+
+    const dispatch = useAppDispatch();
 
     const onAddToCartClick = () => {
-
+        dispatch(addProduct(product));
     }
 
     return (

@@ -2,17 +2,24 @@ import React from 'react';
 import CheckoutProduct from '../components/CheckoutProduct';
 import StripeCheckoutButton from '../components/StripeButton';
 import globalStyles from '../globalStyles';
-import { cartProduct as cartProductData } from '../testData/cartProduct';
+import { useAppSelector } from '../redux/hooks';
+import DisplayMessage from '../components/DisplayMessage';
 
 const Checkout = () => {
 
-    const cartProducts = cartProductData;
+    const cartProducts = useAppSelector(state => state.cart.currentCart.cartProducts);
 
-    const total = 99;
+    const total = useAppSelector(state => state.cart.totalPrice);
+
+    const { type, message } = useAppSelector(state => state.message);
 
     return (
 
         <div className={`${globalStyles.pageContainer}`}>
+
+            {
+                type && message ? <DisplayMessage type={type} message={message} /> : null
+            }
 
             <div className={`${globalStyles.checkout.header.container} ${globalStyles.textDefault}  ${globalStyles.borderBottom}`}>
 
@@ -37,8 +44,8 @@ const Checkout = () => {
                 </div>
             </div>
 
-            {cartProducts.map(cartProduct => (
-                <CheckoutProduct key={cartProduct.id} cartProduct={cartProduct} />
+            {cartProducts!.map(cartProduct => (
+                <CheckoutProduct key={cartProduct.product!.id} cartProduct={cartProduct} />
             ))}
 
             <div className={`flex-initial ${globalStyles.textDefault} font-bold mt-4`}>TOTAL: ${total}</div>
@@ -50,9 +57,8 @@ const Checkout = () => {
             <div className={`flex-initial text-center mt-14 ${globalStyles.textDefault} text-red-500`}>
                 Please use the following test credit card for payments:
                 <br />
-                Test Credit Card
+                4242424242424242
             </div>
-
         </div>
     );
 }

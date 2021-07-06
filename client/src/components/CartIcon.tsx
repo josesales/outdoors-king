@@ -2,10 +2,11 @@ import React from 'react';
 import cart from '../assets/cart.svg';
 import { Link } from 'react-router-dom';
 import globalStyles from '../globalStyles';
+import { useAppSelector } from '../redux/hooks';
 
 const CartIcon = () => {
 
-    const productsNumber = 809;
+    const productsNumber = useAppSelector(state => state.cart.totalQuantity);
 
     return (
         <Link className='flex flex-none' to='/checkout'>
