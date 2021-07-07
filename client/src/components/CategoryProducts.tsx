@@ -53,7 +53,7 @@ const CategoryProducts = ({ category, minified }: { category: Category, minified
     }
 
     const showAllProducts = () => {
-        history.push('/category', { category })
+        history.push('/category', { category });
     }
 
     return (
@@ -68,14 +68,14 @@ const CategoryProducts = ({ category, minified }: { category: Category, minified
                             <div className="w-full flex justify-between items-center">
 
                                 <h1 onClick={showAllProducts} className={`mb-8 sm:ml-8 cursor-pointer capitalize 
-                            ${globalStyles.textXBig} ${globalStyles.borderBottomHover}`}>
+                                    ${globalStyles.textXBig} ${globalStyles.borderBottomHover}`}>
                                     {name}
                                 </h1>
 
                                 {
                                     minified ?
                                         <span onClick={showAllProducts} className={`cursor-pointer mb-8 sm:mr-8 
-                                ${globalStyles.textBig} ${globalStyles.borderBottomHover}`}>
+                                            ${globalStyles.textBig} ${globalStyles.borderBottomHover}`}>
                                             See more...
                                         </span> : null
                                 }
@@ -91,7 +91,7 @@ const CategoryProducts = ({ category, minified }: { category: Category, minified
 
                             :
                             <span className={`mt-10 sm:ml-8 cursor-default ${globalStyles.textBig}`}>
-                                No products for this category  at the moment.
+                                No products for this category at the moment.
                             </span>
                     }
                 </div>

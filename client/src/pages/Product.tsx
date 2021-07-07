@@ -61,14 +61,13 @@ const Product = (): JSX.Element => {
     }
 
     const onConfirmClick = async () => {
+
         //convert from string to number
         product.price = +product.price!;
 
         await setLoading(true);
         await dispatch(save(product, productImage, currentUser!.token));
         setLoading(false);
-
-        console.log(product)
     }
 
     return (

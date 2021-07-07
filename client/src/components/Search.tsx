@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
 import HTML_ENTITIES from '../utils/htmlEntities';
 import globalStyles from '../globalStyles';
+import { useAppDispatch } from '../redux/hooks';
+import { setProducts } from '../redux/product/productAsyncActions';
+import { setIsSearching, setSearchActive } from '../redux/product/productReducer';
 
 const Search = (): JSX.Element => {
 
     const [text, setText] = useState('');
 
-    const onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setText(event.target.value);
+    const dispatch = useAppDispatch();
+
+    const onTextChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        const currentText = event.target.value;
+        setText(currentText);
+
+        if (currentText) {
+            dispatch(setSearchActive(true));
+            dispatch(setIsSearching(true));
+
+            //fetch product by name
+            await dispatch(setProducts({
+                name: currentText
+            }));
+
+            dispatch(setIsSearching(false));
+        } else {
+
+            dispatch(setSearchActive(false));
+            dispatch(setIsSearching(false));
+        }
     };
 
     return (

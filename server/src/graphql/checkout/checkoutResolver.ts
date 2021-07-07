@@ -15,7 +15,7 @@ const checkoutResolver: Resolvers<Context> = {
                 }
 
                 if (!checkoutInput.amount || checkoutInput.amount <= 0) {
-                    throw new UserInputError('Your cart is empty!');
+                    throw new UserInputError('Please add Products to your Cart.');
                 }
 
                 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2020-08-27', typescript: true });

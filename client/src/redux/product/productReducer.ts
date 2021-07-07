@@ -4,13 +4,17 @@ import Product from '../../interfaces/models/product';
 interface productState {
     products?: Product[],
     product?: Product | null,
-    image?: string
+    image?: string,
+    searchActive?: boolean,
+    isSearching?: boolean,
 }
 
 const state = {
     products: [],
     product: null,
     image: '',
+    searchActive: false,
+    isSearching: false,
 } as productState
 
 export const userSlice = createSlice({
@@ -27,9 +31,15 @@ export const userSlice = createSlice({
         setImage: (state, action: PayloadAction<string>) => {
             state.image = action.payload;
         },
+        setSearchActive: (state, action: PayloadAction<boolean>) => {
+            state.searchActive = action.payload;
+        },
+        setIsSearching: (state, action: PayloadAction<boolean>) => {
+            state.isSearching = action.payload;
+        },
     }
 });
 
-export const { setProducts, setProduct, setImage } = userSlice.actions;
+export const { setProducts, setProduct, setImage, setSearchActive, setIsSearching } = userSlice.actions;
 
 export default userSlice.reducer;

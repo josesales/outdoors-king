@@ -20,7 +20,7 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
 
                     <div className="flex flex-col items-center flex-none rounded-3xl w-2/5 md:w-1/4 lg:w-1/5 xl:w-1/6 mt-10 p-5 ml-4 mr-4 bg-indigo-100 sm:bg-indigo-100 lg:bg-white hover:bg-indigo-100">
 
-                        <span className={`cursor-pointer mb-5 ${globalStyles.textDefault}`}>
+                        <span className={`cursor-pointer capitalize mb-5 ${globalStyles.textDefault}`}>
                             {product.name}
                         </span>
 

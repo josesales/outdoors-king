@@ -1,5 +1,5 @@
 import { ApolloError, UserInputError } from "apollo-server-errors";
-import { Resolvers, Product, File } from "../generated/graphql-server";
+import { Resolvers, Product, File, ProductInput } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import { validate } from "./productUtil";
 import { validateAdminUser } from "../../permissions/permission";
@@ -11,8 +11,16 @@ const productResolver: Resolvers<Context> = {
             try {
 
                 let filter = {};
+
                 if (productInput) {
                     filter = productInput;
+
+                    if (productInput.name?.trim()) {
+                        filter = {
+                            ...filter,
+                            name: { contains: productInput.name.toLowerCase() }
+                        }
+                    }
                 }
 
                 const products: Product[] = await context.prisma.product.findMany({
@@ -66,7 +74,7 @@ const productResolver: Resolvers<Context> = {
                 const categoryId: string = productInput.category?.id!;
 
                 const upsertData = {
-                    name: productInput.name!,
+                    name: productInput.name!.toLowerCase(),
                     price: productInput.price!,
                     category: {
                         connect: {
