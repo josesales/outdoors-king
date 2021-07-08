@@ -5,7 +5,7 @@ interface Product {
     name?: string,
     price?: number,
     category?: Category,
-    image?: string | ArrayBuffer,
+    image?: string,
 }
 
 export default Product;

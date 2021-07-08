@@ -13,12 +13,15 @@ const categoryResolver: Resolvers<Context> = {
                         id: true,
                         name: true,
                         products: {
-                            take: 3
+                            take: 3,
+                            include: {
+                                category: true,
+                            }
                         },
                     },
                 });
-                return categoriesDb;
 
+                return categoriesDb;
             } catch (error) {
                 throw new ApolloError(error.message, 'INTERNAL_SERVER_ERROR');
             }

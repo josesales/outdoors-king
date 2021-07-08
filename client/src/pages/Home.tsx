@@ -6,6 +6,7 @@ import globalStyles from '../globalStyles';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import Loader from '../components/Loader';
 import { setIsSearching, setSearchActive } from '../redux/product/productReducer';
+import DisplayMessage from '../components/DisplayMessage';
 
 const Home = () => {
 
@@ -13,6 +14,8 @@ const Home = () => {
 
     const searchActive = useAppSelector(state => state.product.searchActive);
     const isSearching = useAppSelector(state => state.product.isSearching);
+
+    const { type, message } = useAppSelector(state => state.message);
 
     useEffect(() => {
 
@@ -24,6 +27,9 @@ const Home = () => {
 
     return (
         <div className={globalStyles.pageContainer}>
+            {
+                type && message ? <DisplayMessage type={type} message={message} /> : null
+            }
 
             <Search />
 

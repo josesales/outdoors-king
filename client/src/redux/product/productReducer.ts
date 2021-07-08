@@ -28,6 +28,9 @@ export const userSlice = createSlice({
         setProduct: (state, action: PayloadAction<Product>) => {
             state.product = action.payload;
         },
+        removeProduct: (state, action: PayloadAction<string>) => {
+            state.products = state.products?.filter(product => product.id !== action.payload)
+        },
         setImage: (state, action: PayloadAction<string>) => {
             state.image = action.payload;
         },
@@ -40,6 +43,6 @@ export const userSlice = createSlice({
     }
 });
 
-export const { setProducts, setProduct, setImage, setSearchActive, setIsSearching } = userSlice.actions;
+export const { setProducts, setProduct, setImage, setSearchActive, setIsSearching, removeProduct } = userSlice.actions;
 
 export default userSlice.reducer;

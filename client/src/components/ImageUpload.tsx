@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { ReactComponent as Upload } from "../assets/upload.svg";
 import globalStyles from '../globalStyles';
 
-const ImageUpload = ({ title, callback }: { title: string, callback?: Function }) => {
+const ImageUpload = ({ title, initialImage, callback }: { title: string, initialImage?: string, callback?: Function }) => {
 
-    const [base64Image, setBase64Image] = useState<string | ArrayBuffer>('');
+    const [base64Image, setBase64Image] = useState<string | ArrayBuffer>(initialImage ? initialImage : '');
 
     const onFileUploaded = (event: React.ChangeEvent<HTMLInputElement>) => {
 

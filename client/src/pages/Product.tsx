@@ -12,18 +12,17 @@ import DisplayMessage from '../components/DisplayMessage';
 import { useHistory } from 'react-router-dom';
 import { getCategories } from '../redux/category/categoryAsyncActions';
 import { save } from '../redux/product/productAsyncActions';
+import { setImage } from '../redux/product/productReducer';
+
+const initialProduct: ProductInterface = {
+    name: '',
+    category: {
+        name: ''
+    },
+    price: undefined,
+}
 
 const Product = (): JSX.Element => {
-
-    const initialProduct: ProductInterface = {
-        name: '',
-        category: {
-            name: ''
-        },
-        price: 0,
-    }
-
-    let productImage: string = '';
 
     const location = useLocation<ProductLocation>();
     const dispatch = useAppDispatch();
@@ -40,7 +39,9 @@ const Product = (): JSX.Element => {
     const [loading, setLoading] = useState(false);
     const { type, message } = useAppSelector(state => state.message);
 
+
     const categories = useAppSelector(state => state.category.categories);
+    let productImage: string = product.image ? product.image : ''
 
     useEffect(() => {
         dispatch(getCategories());
@@ -62,12 +63,23 @@ const Product = (): JSX.Element => {
 
     const onConfirmClick = async () => {
 
-        //convert from string to number
-        product.price = +product.price!;
+        if (typeof product.price === 'string') {
+            //convert from string to number
+            product.price = +product.price!;
+        }
 
         await setLoading(true);
         await dispatch(save(product, productImage, currentUser!.token));
         setLoading(false);
+
+        if (!product.id) {
+            //clean fields after insertion
+            setProduct({ ...initialProduct });
+            productImage = '';
+        } else {
+            //in case of an update redirect the user to the home page
+            history.push('/')
+        }
     }
 
     return (
@@ -85,15 +97,16 @@ const Product = (): JSX.Element => {
                         className={globalStyles.input} onChange={onProductChange} />
 
                     <input type="number" min={0} name="price" placeholder="Price" required autoComplete="off"
-                        className={globalStyles.input} onChange={onProductChange} />
+                        value={product.price} className={globalStyles.input} onChange={onProductChange} />
 
                     {
                         categories ?
-                            <Select placeholder="Category" title="Select the Category of the Product."
+                            <Select initialValue={product?.category?.name ? product.category.name : ''}
+                                placeholder="Category" title="Select the Category of the Product."
                                 options={categories} callback={onCategorySelected} /> : null
                     }
 
-                    <ImageUpload title="Image" callback={onImageSelected} />
+                    <ImageUpload initialImage={productImage} title="Image" callback={onImageSelected} />
 
                     <button title="Confirm Operation" onClick={onConfirmClick} className={globalStyles.button}>
                         {productState ? 'Edit' : 'Add'}

@@ -5,9 +5,11 @@ interface Option {
     id?: string,
     name?: string
 }
-const Select = ({ initialValue, placeholder, title, options, callback }:
-    { initialValue?: string, placeholder: string, title?: string, options: Option[], callback?: Function })
-    : JSX.Element => {
+const Select = ({ initialValue, placeholder, title, options, selectedOption, callback }:
+    {
+        initialValue?: string, placeholder: string, title?: string, options: Option[], selectedOption?: Option,
+        callback?: Function
+    }): JSX.Element => {
 
     const [text, setText] = useState(initialValue ? initialValue : '');
     const [isVisible, setIsVisible] = useState(false);

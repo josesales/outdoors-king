@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "cart" (
     "id" TEXT NOT NULL,
-    "user" TEXT NOT NULL,
+    "user" TEXT,
 
     PRIMARY KEY ("id")
 );
@@ -19,7 +19,7 @@ CREATE TABLE "cart-product" (
 -- CreateTable
 CREATE TABLE "category" (
     "id" TEXT NOT NULL,
-    "name" VARCHAR(255),
+    "name" VARCHAR(255) NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -30,6 +30,7 @@ CREATE TABLE "product" (
     "name" VARCHAR(255) NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
     "category" TEXT NOT NULL,
+    "image" TEXT,
 
     PRIMARY KEY ("id")
 );
@@ -79,19 +80,19 @@ CREATE UNIQUE INDEX "passwordResetKey" ON "user"("id", "name", "email");
 CREATE UNIQUE INDEX "password-reset.user_unique" ON "password-reset"("user");
 
 -- AddForeignKey
-ALTER TABLE "password-reset" ADD FOREIGN KEY ("user") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "cart" ADD FOREIGN KEY ("user") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "cart-product" ADD FOREIGN KEY ("cart") REFERENCES "cart"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "cart-product" ADD FOREIGN KEY ("product") REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "cart" ADD FOREIGN KEY ("user") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "product" ADD FOREIGN KEY ("category") REFERENCES "category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user" ADD FOREIGN KEY ("profile") REFERENCES "profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "password-reset" ADD FOREIGN KEY ("user") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
