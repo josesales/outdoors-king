@@ -8,7 +8,7 @@
     "server": " env-cmd -f server/config/dev.env nodemon --exec ts-node server/src/server.ts",
     "build": "cd client && npm run build",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "start": "cd server/src && node server.js",
+    "start": "ts-node server/src/server.ts",
     "generate": "graphql-codegen --config codegen.yml",
     "seed": "ts-node server/prisma/seed.ts"
   },
