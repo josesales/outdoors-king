@@ -7,6 +7,8 @@ import { auth } from './middleware/auth';
 import cors from './middleware/cors';
 import { GraphQLError } from 'graphql';
 import { graphqlUploadExpress } from 'graphql-upload';
+import enforce from 'express-sslify';
+import compression from 'compression';
 
 (async () => {
 
@@ -32,6 +34,9 @@ import { graphqlUploadExpress } from 'graphql-upload';
       return new GraphQLError(error.message);
     },
   });
+
+  app.use(compression);
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
 
