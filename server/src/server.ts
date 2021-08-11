@@ -7,6 +7,8 @@ import { auth } from './middleware/auth';
 import cors from './middleware/cors';
 import { GraphQLError } from 'graphql';
 import { graphqlUploadExpress } from 'graphql-upload';
+import path from 'path'
+
 
 (async () => {
 
@@ -36,6 +38,14 @@ import { graphqlUploadExpress } from 'graphql-upload';
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
 
   app.use(cors);
+
+  
+if (process.env.NODE_ENV == 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')))
+  // app.get('/*', function (req, res) {
+  //     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  //   });
+}
 
   app.use(async (req, _, next) => {
     try {
