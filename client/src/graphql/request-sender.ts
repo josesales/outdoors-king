@@ -1,10 +1,12 @@
 
 import { GraphQLClient } from 'graphql-request'
 
+const url = process.env.NODE_ENV === 'development' ?  'http://localhost:5000/graphql' : 'https://outdoors-king.net/api/graphql';
+
 export const sendRequest = async (reqData: { queryName: string, query: string }, variables: any = null, token?: string) => {
 
     try {
-        const client = new GraphQLClient('http://localhost:5000/graphql');
+        const client = new GraphQLClient(url);
 
         const requestHeaders = {
             authorization: token ? `Bearer ${token}` : ''
