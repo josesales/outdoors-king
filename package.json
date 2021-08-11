@@ -12,7 +12,7 @@
     "generate": "graphql-codegen --config codegen.yml",
     "seed": "ts-node server/prisma/seed.ts",
     "ts:build": "cd server && tsc --outDir dist",
-    "js:server": " env-cmd -f server/config/dev.env nodemon --exec node server/dist/src/server.js",
+    "js:server": "node server/dist/src/server.js",
     "js:dev": "concurrently --kill-others-on-fail \"npm run js:server\" \"npm run client\""
   },
   "keywords": [],
