@@ -55,6 +55,10 @@ const Checkout = () => {
             </div>
 
             <div className={`flex-initial text-center mt-14 ${globalStyles.textDefault} text-red-500`}>
+                This site is just a portfolio/example project. So the purchases are for testing purposes only.
+            </div>
+            
+            <div className={`flex-initial text-center mt-14 ${globalStyles.textDefault} text-red-500`}>
                 Please use the following test credit card for payments:
                 <br />
                 4242424242424242
