@@ -139,6 +139,7 @@ const productResolver: Resolvers<Context> = {
                         id
                     }
                 })
+                
                 return true;
             } catch (error) {
                 throw new ApolloError(error.message, error.code ? error.code :
