@@ -12,7 +12,6 @@ import DisplayMessage from '../components/DisplayMessage';
 import { useHistory } from 'react-router-dom';
 import { getCategories } from '../redux/category/categoryAsyncActions';
 import { save } from '../redux/product/productAsyncActions';
-import { setImage } from '../redux/product/productReducer';
 
 const initialProduct: ProductInterface = {
     name: '',

@@ -1,5 +1,5 @@
 const globalStyles = {
-    pageContainer: 'w-full flex flex-col items-center',
+    pageContainer: 'w-full flex flex-col items-center mb-12',
 
     input: `flex-initial w-10/12 sm:w-9/12 md:w-6/12 lg:w-1/3 h-16 rounded-2xl mb-12 focus:outline-none bg-gray-200 placeholder-black 
         text-lg sm:text-3xl bg-gradient-to-r from-indigo-100 via-red-400 to-yellow-400`,

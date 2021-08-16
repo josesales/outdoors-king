@@ -8,16 +8,22 @@ const AdminDropdown = () => {
 
     const history = useHistory();
 
+    const onItemClick = (page: string) => {
+
+        setIsVisible(false);
+        history.push(page)
+    }
+
     return (
         <div onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)}
             className={`flex-initial cursor-pointer relative ${globalStyles.textBig}`}>
 
-            <span className={globalStyles.borderBottomHover}>Admin</span>
+            <span onClick={()=> setIsVisible(true)} className={globalStyles.borderBottomHover}>Admin</span>
 
             <div className={globalStyles.headerDropdown.div(isVisible, '-left-16')}>
                 <ul className={globalStyles.headerDropdown.ul}>
-                    <li onClick={() => history.push('/user')} className={globalStyles.headerDropdown.li}>Add User</li>
-                    <li onClick={() => history.push('/product')} className={globalStyles.headerDropdown.li}>Add Product</li>
+                    <li onClick={() => { onItemClick('/user') } } className={globalStyles.headerDropdown.li}>Add User</li>
+                    <li onClick={() => { onItemClick('/product') } } className={globalStyles.headerDropdown.li}>Add Product</li>
                 </ul>
             </div>
         </div>

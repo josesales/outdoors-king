@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import globalStyles from '../globalStyles';
+import Category from '../interfaces/models/category';
 import { getCategories } from '../redux/category/categoryAsyncActions';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
@@ -17,15 +18,23 @@ const CategoryDropdown = () => {
         dispatch(getCategories());
     }, [dispatch])
 
+    const onCategoryClick = (category: Category) => {
+        setIsVisible(false);
+        history.push('/category', { category });
+    }
+
     const categoriesUi = categories!.map(category =>
-        <li onClick={() => history.push('/category', { category })}
-            key={category.id} className={globalStyles.headerDropdown.li}>{category.name}</li>);
+        <li key={category.id} className={globalStyles.headerDropdown.li} 
+            onClick={() => {
+
+            onCategoryClick(category);
+        }}>{category.name}</li>);
 
     return (
         <div onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)}
             className={`flex-initial cursor-pointer relative capitalize z-40 ${globalStyles.textBig}`}>
 
-            <span className={globalStyles.borderBottomHover}>Category</span>
+            <span onClick={()=> setIsVisible(true)} className={globalStyles.borderBottomHover}>Category</span>
 
             <div className={globalStyles.headerDropdown.div(isVisible, '-left-5')}>
                 <ul className={globalStyles.headerDropdown.ul}>
