@@ -12,6 +12,7 @@ const Checkout = lazy(() => import('./pages/Checkout'));
 const Category = lazy(() => import('./pages/Category'));
 const User = lazy(() => import('./pages/User'));
 const Product = lazy(() => import('./pages/Product'));
+const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 
 function App(): JSX.Element {
 
@@ -29,6 +30,7 @@ function App(): JSX.Element {
           <Route path='/checkout' component={Checkout} />
           <Route path='/user' component={User} />
           <Route path='/product' component={Product} />
+          <Route path='/productDetails' component={ProductDetails} />
         </Suspense>
       </Switch>
     </div>

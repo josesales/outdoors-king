@@ -29,6 +29,10 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
     const onEditProductClick = () => {
         history.push('/product', { product })
     }
+    
+    const onProductClick = () => {
+        history.push('/productDetails', { product })
+    }
 
     return (
 
@@ -55,14 +59,14 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
                                 : null
                         }
 
-                        <span className={`cursor-pointer capitalize mb-5 ${globalStyles.textDefault}`}>
+                        <span onClick={onProductClick} className={`cursor-pointer capitalize mb-5 ${globalStyles.textDefault} ${globalStyles.borderBottomHover}`}>
                             {product.name}
                         </span>
 
                         {
                             product.image ?
-                                <img src={product.image.toString()} alt="Product"
-                                    className="w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none" />
+                                <img onClick={onProductClick} src={product.image.toString()} alt="Product"
+                                    className={`cursor-pointer w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none`} />
                                 : ''
                         }
 

@@ -14,6 +14,7 @@ const productSchema = {
     type Product {
         id: String
         name: String
+        description: String
         price: Float
         category: Category
         image: Upload
@@ -24,6 +25,7 @@ const productSchema = {
         input ProductInput {
         id: String
         name: String
+        description: String
         price: Float
         category: CategoryInput
     }

@@ -128,6 +128,7 @@ export type Product = {
   __typename?: 'Product';
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
   category?: Maybe<Category>;
   image?: Maybe<Scalars['Upload']>;
@@ -137,6 +138,7 @@ export type Product = {
 export type ProductInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
   category?: Maybe<CategoryInput>;
 };
@@ -409,6 +411,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Upload']>, ParentType, ContextType>;

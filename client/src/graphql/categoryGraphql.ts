@@ -12,6 +12,7 @@ export const categoriesQuery = {
                     products {
                         id
                         name
+                        description
                         price
                         image
                         category {

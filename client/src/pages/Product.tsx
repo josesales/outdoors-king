@@ -16,6 +16,7 @@ import { setImage } from '../redux/product/productReducer';
 
 const initialProduct: ProductInterface = {
     name: '',
+    description: '',
     category: {
         name: ''
     },
@@ -47,7 +48,7 @@ const Product = (): JSX.Element => {
         dispatch(getCategories());
     }, [dispatch])
 
-    const onProductChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onProductChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value, name } = event.target;
 
         setProduct({ ...product, [name]: value });
@@ -106,7 +107,11 @@ const Product = (): JSX.Element => {
                                 options={categories} callback={onCategorySelected} /> : null
                     }
 
+                    <textarea name="description" placeholder="Description" value={product.description} autoComplete="off"
+                        className={`${globalStyles.input} pt-4 h-32`} onChange={onProductChange} rows={4} cols={100}></textarea>
+                        
                     <ImageUpload initialImage={productImage} title="Image" callback={onImageSelected} />
+
 
                     <button title="Confirm Operation" onClick={onConfirmClick} className={globalStyles.button}>
                         {productState ? 'Edit' : 'Add'}

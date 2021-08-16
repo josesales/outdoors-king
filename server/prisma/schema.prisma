@@ -39,6 +39,7 @@ model product {
   category     category      @relation(fields: [categoryId], references: [id])
   cartProducts cartProduct[]
   image        String?
+  description  String?        @db.VarChar(500)
 }
 
 model profile {

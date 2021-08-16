@@ -59,7 +59,9 @@ const globalStyles = {
             container: 'w-full sm:w-11/12 md:w-9/12 flex justify-center items-center mb-2 mt-2',
             image: 'w-full sm:w-9/12 md:w-8/12 xl:w-5/12',
         }
-    }
+    },
+
+    productDetailsContainer: 'flex flex-row flex-initial justify-start capitalize items-center bg-gradient-to-r h-16 mb-12 cursor-default rounded-2xl from-indigo-100 via-red-400 to-yellow-400 w-10/12 sm:w-9/12 md:w-6/12 lg:w-1/3',
 
 }
 

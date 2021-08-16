@@ -76,6 +76,7 @@ const productResolver: Resolvers<Context> = {
                 const upsertData = {
                     name: productInput.name!.toLowerCase(),
                     price: productInput.price!,
+                    description: productInput.description,
                     category: {
                         connect: {
                             id: categoryId

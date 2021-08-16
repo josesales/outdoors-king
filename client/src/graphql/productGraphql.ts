@@ -3,6 +3,7 @@ import { gql } from "graphql-request";
 const allFields = `
     id
     name
+    description
     price
     image
     category {
@@ -14,6 +15,7 @@ const allFields = `
 const allFieldsButImage = `
     id
     name
+    description
     price
     image
     category {

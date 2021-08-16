@@ -8,6 +8,10 @@ export const validate = async (productInput: ProductInput) => {
         throw new UserInputError('Name is mandatory');
     }
 
+    if (productInput?.description && productInput.description.length > 500) {
+        throw new UserInputError('Maximum 500 characters allowed for Description');
+    }
+
     if (!productInput?.price) {
         throw new UserInputError('Price is mandatory');
     }
