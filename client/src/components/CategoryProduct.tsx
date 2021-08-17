@@ -73,7 +73,7 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
                         <div className="w-full flex flex-col justify-center items-center">
 
                             <span className={`flex-initial mt-5 cursor-default ${globalStyles.textDefault}`}>
-                                $ {product.price}
+                                $ {product.price!}
                             </span>
 
                             <span onClick={onAddToCartClick}

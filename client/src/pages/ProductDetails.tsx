@@ -40,7 +40,7 @@ const ProductDetails = (): JSX.Element => {
             {
                 product?.description ?
                     <div className="flex flex-row flex-initial break-words justify-start items-center bg-gradient-to-r mb-12 cursor-default rounded-2xl from-indigo-100 via-red-400 to-yellow-400 w-10/12 sm:w-9/12 md:w-6/12 lg:w-1/3">
-                        <p className={`${globalStyles.textDefault} break-words w-full p-4`}>{product?.description}</p>
+                        <p className={`${globalStyles.textBig} break-words w-full p-4`}>{product?.description}</p>
                     </div>
                 : null
             }

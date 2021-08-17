@@ -35,6 +35,8 @@ const Product = (): JSX.Element => {
         history.push('/');
     }
 
+    
+
     const [product, setProduct] = useState(productState ? productState : initialProduct);
     const [loading, setLoading] = useState(false);
     const { type, message } = useAppSelector(state => state.message);
@@ -65,7 +67,7 @@ const Product = (): JSX.Element => {
 
         if (typeof product.price === 'string') {
             //convert from string to number
-            product.price = +product.price!;
+            product.price = Math.round(product.price * 100) / 100
         }
 
         await setLoading(true);
