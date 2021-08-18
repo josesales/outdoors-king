@@ -4,7 +4,7 @@ interface Product {
     id?: string,
     name?: string,
     description?: string,
-    price?: number,
+    price?: string,
     category?: Category,
     image?: string,
 }

@@ -12,6 +12,7 @@ import DisplayMessage from '../components/DisplayMessage';
 import { useHistory } from 'react-router-dom';
 import { getCategories } from '../redux/category/categoryAsyncActions';
 import { save } from '../redux/product/productAsyncActions';
+import { toDecimalString } from '../utils/math';
 
 const initialProduct: ProductInterface = {
     name: '',
@@ -26,7 +27,16 @@ const Product = (): JSX.Element => {
 
     const location = useLocation<ProductLocation>();
     const dispatch = useAppDispatch();
-    const productState = location && location.state && location.state.product;
+    let productState = null 
+
+    if(location && location.state && location.state.product) {
+        productState = {...location.state.product};
+        
+        if(productState.price) {
+            productState.price = toDecimalString(productState.price);
+        }
+    }
+
 
     const history = useHistory();
     const currentUser = useAppSelector(state => state.user.currentUser);
@@ -34,8 +44,6 @@ const Product = (): JSX.Element => {
     if (!currentUser || !currentUser.profile || currentUser.profile?.name?.toLowerCase() !== 'admin') {
         history.push('/');
     }
-
-    
 
     const [product, setProduct] = useState(productState ? productState : initialProduct);
     const [loading, setLoading] = useState(false);
@@ -50,8 +58,7 @@ const Product = (): JSX.Element => {
     }, [dispatch])
 
     const onProductChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { value, name } = event.target;
-
+        let { value, name } = event.target;
         setProduct({ ...product, [name]: value });
     };
 
@@ -65,10 +72,10 @@ const Product = (): JSX.Element => {
 
     const onConfirmClick = async () => {
 
-        if (typeof product.price === 'string') {
-            //convert from string to number
-            product.price = Math.round(product.price * 100) / 100
-        }
+        // if (typeof product.price === 'string') {
+        //     //convert from string to number
+        //     product.price = Math.round(product.price * 100) / 100
+        // }
 
         await setLoading(true);
         await dispatch(save(product, productImage, currentUser!.token));
@@ -99,7 +106,7 @@ const Product = (): JSX.Element => {
                         className={globalStyles.input} onChange={onProductChange} />
 
                     <input type="number" min={0} name="price" placeholder="Price" required autoComplete="off"
-                        value={product.price} className={globalStyles.input} onChange={onProductChange} />
+                        value={product.price!} className={globalStyles.input} onChange={onProductChange} />
 
                     {
                         categories ?

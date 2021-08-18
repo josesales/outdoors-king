@@ -26,7 +26,7 @@ const productSchema = {
         id: String
         name: String
         description: String
-        price: Float
+        price: String
         category: CategoryInput
     }
     `,

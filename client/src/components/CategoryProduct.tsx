@@ -7,6 +7,7 @@ import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { ReactComponent as EditIcon } from "../assets/edit.svg";
 import { removeProduct } from '../redux/product/productAsyncActions';
 import { useHistory } from 'react-router-dom';
+import { toDecimalString } from '../utils/math';
 
 const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) => {
 
@@ -73,7 +74,7 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
                         <div className="w-full flex flex-col justify-center items-center">
 
                             <span className={`flex-initial mt-5 cursor-default ${globalStyles.textDefault}`}>
-                                $ {product.price!}
+                                $ {toDecimalString(product.price!)}
                             </span>
 
                             <span onClick={onAddToCartClick}

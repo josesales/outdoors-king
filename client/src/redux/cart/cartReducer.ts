@@ -50,7 +50,7 @@ export const cartSlice = createSlice({
             }
 
             //adding to total price and total quantity
-            state.totalPrice += action.payload.price!;
+            state.totalPrice += +action.payload.price!;
             state.totalQuantity++;
         },
 
@@ -79,7 +79,7 @@ export const cartSlice = createSlice({
             }
 
             //removing from total price and total quantity
-            state.totalPrice -= action.payload.price!;
+            state.totalPrice -= +action.payload.price!;
             state.totalQuantity--;
         },
 
@@ -90,7 +90,7 @@ export const cartSlice = createSlice({
                 if (cartProduct.product!.id === action.payload.id) {
 
                     //removing from total price and total quantity according to the quantity of the product
-                    state.totalPrice -= action.payload.price! * cartProduct.quantity!;
+                    state.totalPrice -= +action.payload.price! * cartProduct.quantity!;
                     state.totalQuantity -= cartProduct.quantity!;
                     return;
                 }

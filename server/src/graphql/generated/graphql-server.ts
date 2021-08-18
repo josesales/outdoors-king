@@ -139,7 +139,7 @@ export type ProductInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['String']>;
   category?: Maybe<CategoryInput>;
 };
 

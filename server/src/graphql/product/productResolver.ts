@@ -1,5 +1,5 @@
 import { ApolloError, UserInputError } from "apollo-server-errors";
-import { Resolvers, Product, File, ProductInput } from "../generated/graphql-server";
+import { Resolvers, Product } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import { validate } from "./productUtil";
 import { validateAdminUser } from "../../permissions/permission";
@@ -75,7 +75,7 @@ const productResolver: Resolvers<Context> = {
 
                 const upsertData = {
                     name: productInput.name!.toLowerCase(),
-                    price: productInput.price!,
+                    price: +productInput.price!,
                     description: productInput.description,
                     category: {
                         connect: {

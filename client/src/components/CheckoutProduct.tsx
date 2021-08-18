@@ -5,6 +5,7 @@ import { CartProduct } from '../interfaces/models/cart';
 import HTML_ENTITIES from '../utils/htmlEntities';
 import { useAppDispatch } from '../redux/hooks';
 import { addProduct, cleanProduct, removeProduct } from '../redux/cart/cartReducer';
+import { toDecimalString } from '../utils/math';
 
 const CheckoutProduct = ({ cartProduct }: { cartProduct: CartProduct }) => {
 
@@ -47,7 +48,7 @@ const CheckoutProduct = ({ cartProduct }: { cartProduct: CartProduct }) => {
                 </div>
             </span>
 
-            <span className={`${globalStyles.textDefault} ${globalStyles.checkout.default}`}>{product?.price}</span>
+            <span className={`${globalStyles.textDefault} ${globalStyles.checkout.default}`}>{toDecimalString(product?.price!)}</span>
 
             <div className={`${globalStyles.checkout.default}`} onClick={() => cleanProductClick()}>
                 <DeleteIcon className="cursor-pointer w-6 h-6  sm:w-10 sm:h-10 fill-current hover:text-red-500" />

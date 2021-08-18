@@ -3,6 +3,7 @@ import { useLocation } from 'react-router';
 import globalStyles from '../globalStyles';
 import ProductLocation from '../interfaces/location/productLocation';
 import { useHistory } from 'react-router-dom';
+import { toDecimalString } from '../utils/math';
 
 
 const ProductDetails = (): JSX.Element => {
@@ -29,7 +30,7 @@ const ProductDetails = (): JSX.Element => {
 
             <div className={globalStyles.productDetailsContainer}>
                 <h2 className={`${globalStyles.textBig} mr-4`}>Price:</h2>
-                <h2 className={globalStyles.textBig}>{"$" + product!.price}</h2>
+                <h2 className={globalStyles.textBig}>{"$" + toDecimalString(product!.price!)}</h2>
             </div>
 
             <div className={globalStyles.productDetailsContainer}>
