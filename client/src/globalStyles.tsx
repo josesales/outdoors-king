@@ -45,6 +45,8 @@ const globalStyles = {
     imageUpload: `w-28 h-28 sm:w-40 sm:h-40 rounded-2xl mb-12 focus:outline-none
         bg-gray-200 placeholder-black bg-gradient-to-r from-indigo-100 
         via-red-400 to-yellow-400 cursor-pointer`,
+    
+    imageDisplay: 'cursor-pointer w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none',
 
     checkout: {
 

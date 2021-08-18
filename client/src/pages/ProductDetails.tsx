@@ -24,9 +24,9 @@ const ProductDetails = (): JSX.Element => {
     return (
         <div className={globalStyles.pageContainer}>
 
-            <img src={product!.image ? product!.image.toString(): ""} alt='item' className={`${globalStyles.imageUpload}`} />
-
             <h2 className={`${globalStyles.title} capitalize`}>{product!.name}</h2>
+            
+            <img src={product!.image ? product!.image.toString(): ""} alt='item' className={`${globalStyles.imageDisplay} mb-12`} />
 
             <div className={globalStyles.productDetailsContainer}>
                 <h2 className={`${globalStyles.textBig} mr-4`}>Price:</h2>

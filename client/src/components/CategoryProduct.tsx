@@ -67,7 +67,7 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
                         {
                             product.image ?
                                 <img onClick={onProductClick} src={product.image.toString()} alt="Product"
-                                    className={`cursor-pointer w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none`} />
+                                    className={`${globalStyles.imageDisplay}`} />
                                 : ''
                         }
 
