@@ -3,6 +3,7 @@ import { Resolvers, Product } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import { validate } from "./productUtil";
 import { validateAdminUser } from "../../permissions/permission";
+import { orderBy } from "lodash";
 
 const productResolver: Resolvers<Context> = {
 
@@ -18,7 +19,8 @@ const productResolver: Resolvers<Context> = {
                     if (productInput.name?.trim()) {
                         filter = {
                             ...filter,
-                            name: { contains: productInput.name.toLowerCase() }
+                            name: { contains: productInput.name.toLowerCase() },
+                            orderBy: 'name asc'
                         }
                     }
                 }
@@ -27,7 +29,8 @@ const productResolver: Resolvers<Context> = {
                     where: filter,
                     include: {
                         category: true
-                    }
+                    },
+                    orderBy: {name: 'asc'},
                 });
 
                 return products;

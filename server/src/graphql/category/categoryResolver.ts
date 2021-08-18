@@ -1,6 +1,7 @@
 import { Category, Resolvers } from "../generated/graphql-server";
 import Context from "../../interfaces/context";
 import { ApolloError } from "apollo-server-errors";
+import { orderBy } from "lodash";
 
 const categoryResolver: Resolvers<Context> = {
 
@@ -16,7 +17,8 @@ const categoryResolver: Resolvers<Context> = {
                             take: 3,
                             include: {
                                 category: true,
-                            }
+                            },
+                            orderBy: {name: 'asc'},
                         },
                     },
                 });
