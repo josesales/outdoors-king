@@ -20,7 +20,6 @@ const productResolver: Resolvers<Context> = {
                         filter = {
                             ...filter,
                             name: { contains: productInput.name.toLowerCase() },
-                            orderBy: 'name asc'
                         }
                     }
                 }
