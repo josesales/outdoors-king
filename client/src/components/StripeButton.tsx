@@ -58,7 +58,7 @@ const StripeCheckoutButton = ({ price }: { price: number }) => {
                 billingAddress
                 shippingAddress
                 image={logo}
-                description={`Your total is ${price}`}
+                description={`Your total is $${price.toFixed(2)}`}
                 amount={priceForStripe}
                 panelLabel='Checkout'
                 token={onToken}

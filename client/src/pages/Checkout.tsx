@@ -48,7 +48,7 @@ const Checkout = () => {
                 <CheckoutProduct key={cartProduct.product!.id} cartProduct={cartProduct} />
             ))}
 
-            <div className={`flex-initial ${globalStyles.textDefault} font-bold mt-4`}>TOTAL: ${total}</div>
+            <div className={`flex-initial ${globalStyles.textDefault} font-bold mt-4`}>TOTAL: ${total.toFixed(2)}</div>
 
             <div className={`flex-initial ${globalStyles.textBig} mt-4`}>
                 <StripeCheckoutButton price={total} />
