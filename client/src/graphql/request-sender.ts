@@ -14,11 +14,10 @@ export const sendRequest = async (reqData: { queryName: string, query: string },
 
         const { queryName, query } = reqData;
         let data = await client.request(query, variables, requestHeaders);
-        // let data = await request('http://localhost:5000/graphql', query, variables);
 
         data = data[queryName]
         return data;
-    } catch (error) {
+    } catch (error: any) {
         const message = error?.response?.errors[0]?.message;
         throw new Error(message);
     }
