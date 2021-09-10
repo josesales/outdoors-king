@@ -46,7 +46,7 @@ const globalStyles = {
         bg-gray-200 placeholder-black bg-gradient-to-r from-indigo-100 
         via-red-400 to-yellow-400 cursor-pointer`,
     
-    imageDisplay: 'cursor-pointer w-32 h-28 sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none',
+    imageDisplay: 'cursor-pointer w-32 h-28 rounded-2xl sm:w-44 sm:h-44 lg:w-48 lg:h-48 xl:w-64 xl:h-64 flex-none',
 
     checkout: {
 

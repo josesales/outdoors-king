@@ -41,7 +41,7 @@ const SearchProduct = () => {
                     </div>
                     :
 
-                    <span className={`mt-10 sm:ml-8 cursor-default ${globalStyles.textBig}`}>
+                    <span className={`w-full text-center cursor-default ${globalStyles.textBig}`}>
                         No products found at the moment.
                     </span>
             }

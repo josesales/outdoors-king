@@ -60,7 +60,7 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
                                 : null
                         }
 
-                        <span onClick={onProductClick} className={`cursor-pointer capitalize mb-5 ${globalStyles.textDefault} ${globalStyles.borderBottomHover}`}>
+                        <span onClick={onProductClick} className={`cursor-pointer capitalize mb-5 text-sm sm:text-2xl ${globalStyles.borderBottomHover}`}>
                             {product.name}
                         </span>
 
@@ -73,12 +73,12 @@ const CategoryProduct = ({ product }: { product: Product, minified?: boolean }) 
 
                         <div className="w-full flex flex-col justify-center items-center">
 
-                            <span className={`flex-initial mt-5 cursor-default ${globalStyles.textDefault}`}>
+                            <span className={`flex-initial mt-5 cursor-default text-sm sm:text-2xl`}>
                                 $ {toDecimalString(product.price!)}
                             </span>
 
                             <span onClick={onAddToCartClick}
-                                className={`mt-2 cursor-pointer ${globalStyles.borderBottomHover} ${globalStyles.textDefault}`}>
+                                className={`mt-2 cursor-pointer ${globalStyles.borderBottomHover} text-sm sm:text-2xl`}>
                                 Add to Cart
                             </span>
                         </div>
