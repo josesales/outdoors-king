@@ -31,11 +31,11 @@ const Header = (): JSX.Element => {
     return (
         <React.Fragment>
 
-            <div className="flex justify-around items-center fixed top-0 left-0 z-30 h-48 bg-indigo-100
+            <div className="flex justify-around items-center fixed top-0 left-0 z-30 h-24 sm:h-40 bg-indigo-100
                 border-b-2 border-gray-500 w-full">
 
                 <Link className='flex flex-none' to='/'>
-                    <img title="Home Page" src={logo} alt="Outdoor King Logo" className="w-24 sm:w-48" />
+                    <img title="Home Page" src={logo} alt="Outdoor King Logo" className="w-24 sm:w-32" />
                 </Link>
 
                 <div className={`flex-initial ${globalStyles.textBig} cursor-pointer`}>
@@ -53,7 +53,7 @@ const Header = (): JSX.Element => {
                 <CartIcon />
             </div>
 
-            <div className="mt-60"></div>
+            <div className="mt-40 sm:mt-60"></div>
         </React.Fragment>
 
     );

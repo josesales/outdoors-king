@@ -49,10 +49,14 @@ const Checkout = () => {
             ))}
 
             <div className={`flex-initial ${globalStyles.textDefault} font-bold mt-4`}>TOTAL: ${total.toFixed(2)}</div>
-
-            <div className={`flex-initial ${globalStyles.textBig} mt-4`}>
-                <StripeCheckoutButton price={total} />
-            </div>
+            
+            {
+                total && total > 0 ?
+                    <div className={`flex-initial ${globalStyles.textBig} mt-4`}>
+                        <StripeCheckoutButton price={total} />
+                    </div>
+                    : ''
+            }
 
             <div className={`flex-initial text-center mt-14 ${globalStyles.textDefault} text-red-500`}>
                 This site is just a portfolio/example project. So the purchases are for testing purposes only.
