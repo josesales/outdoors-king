@@ -37,15 +37,15 @@ const ProductDetails = (): JSX.Element => {
         className={`${globalStyles.imageDisplay} mb-12`}
       />
 
-      <div className={globalStyles.productDetailsContainer}>
+      <div className={`${globalStyles.productDetailsContainer} p-4`}>
         <h2 className={`${globalStyles.textBig} mr-4`}>Price:</h2>
         <h2 className={globalStyles.textBig}>
           {"$" + toDecimalString(product!.price!)}
         </h2>
       </div>
 
-      <div className={globalStyles.productDetailsContainer}>
-        <h2 className={`${globalStyles.textBig} mr-4`}>Category:</h2>
+      <div className={`${globalStyles.productDetailsContainer} p-4`}>
+        <h2 className={`${globalStyles.textBig} mr-4 `}>Category:</h2>
         <h2 className={globalStyles.textBig}>{product!.category!.name}</h2>
       </div>
 
