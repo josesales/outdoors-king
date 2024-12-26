@@ -1,45 +1,58 @@
-import React, { useState } from 'react';
-import HTML_ENTITIES from '../utils/htmlEntities';
-import globalStyles from '../globalStyles';
-import { useAppDispatch } from '../redux/hooks';
-import { setProducts } from '../redux/product/productAsyncActions';
-import { setIsSearching, setSearchActive } from '../redux/product/productReducer';
+import React, { useState } from "react";
+import HTML_ENTITIES from "../utils/htmlEntities";
+import globalStyles from "../globalStyles";
+import { useAppDispatch } from "../redux/hooks";
+import { setProducts } from "../redux/product/productAsyncActions";
+import {
+  setIsSearching,
+  setSearchActive,
+} from "../redux/product/productReducer";
+import { useDebounce } from "../hooks/useDebounce";
 
 const Search = (): JSX.Element => {
+  const [text, setText] = useState("");
 
-    const [text, setText] = useState('');
+  const dispatch = useAppDispatch();
+  const debounce = useDebounce(1000);
 
-    const dispatch = useAppDispatch();
+  const searchProducts = debounce(async (name: string) => {
+    if (name) {
+      dispatch(setSearchActive(true));
+      dispatch(setIsSearching(true));
 
-    const onTextChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+      //fetch product by name
+      await dispatch(
+        setProducts({
+          name,
+        })
+      );
 
-        const currentText = event.target.value;
-        setText(currentText);
+      dispatch(setIsSearching(false));
+    } else {
+      dispatch(setSearchActive(false));
+      dispatch(setIsSearching(false));
+    }
+  });
 
-        if (currentText) {
-            dispatch(setSearchActive(true));
-            dispatch(setIsSearching(true));
+  const onTextChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const currentText = event.target.value;
+    setText(currentText);
+    searchProducts(currentText);
+  };
 
-            //fetch product by name
-            await dispatch(setProducts({
-                name: currentText
-            }));
-
-            dispatch(setIsSearching(false));
-        } else {
-
-            dispatch(setSearchActive(false));
-            dispatch(setIsSearching(false));
-        }
-    };
-
-    return (
-        <React.Fragment>
-
-            <input type="text" placeholder={HTML_ENTITIES.search} required value={text} autoComplete="off"
-                className={globalStyles.input} onChange={onTextChange} />
-        </React.Fragment>
-    );
-}
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder={HTML_ENTITIES.search}
+        required
+        value={text}
+        autoComplete="off"
+        className={globalStyles.input}
+        onChange={onTextChange}
+      />
+    </React.Fragment>
+  );
+};
 
 export default Search;
