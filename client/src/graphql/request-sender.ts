@@ -1,7 +1,9 @@
 import { GraphQLClient } from "graphql-request";
 
-const url = "https://outdoorsking.net/api/graphql";
-// const url = process.env.NODE_ENV === 'development' ?  'http://localhost:5000/graphql' : 'https://outdoorsking.net/api/graphql';
+const url =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/graphql"
+    : "https://outdoorsking.net/api/graphql";
 
 export const sendRequest = async (
   reqData: { queryName: string; query: string },

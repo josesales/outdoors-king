@@ -18,6 +18,10 @@
   "keywords": [],
   "author": "Sales",
   "license": "ISC",
+  "engines": {
+    "node": "16.20.2",
+    "npm": "8.19.4"
+  },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.5",
     "@graphql-codegen/introspection": "1.18.2",
