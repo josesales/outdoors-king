@@ -1,62 +1,69 @@
-import React from 'react';
-import logo from '../assets/logo.png';
-import { Link, useHistory } from 'react-router-dom';
-import globalStyles from '../globalStyles';
-import CategoryDropdown from './CategoryDropdown';
-import AdminDropdown from './AdminDropdown';
-import CartIcon from './CartIcon';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { logout } from '../redux/user/userAsyncActions';
+import React from "react";
+import logo from "../assets/logo.png";
+import { Link, useHistory } from "react-router-dom";
+import globalStyles from "../globalStyles";
+import CategoryDropdown from "./CategoryDropdown";
+import AdminDropdown from "./AdminDropdown";
+import CartIcon from "./CartIcon";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { logout } from "../redux/user/userAsyncActions";
 
 const Header = (): JSX.Element => {
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.currentUser);
 
-    const history = useHistory();
-    const dispatch = useAppDispatch();
-    const user = useAppSelector(state => state.user.currentUser);
+  if (user?.token) {
+    history.push("/");
+  }
 
+  const onLoginClick = async () => {
     if (user?.token) {
-        history.push('/');
+      await dispatch(logout(user.id!));
+      return;
     }
 
-    const onLoginClick = async () => {
+    history.push("/signIn");
+  };
 
-        if (user?.token) {
-            await dispatch(logout(user.id!));
-            return;
-        }
+  return (
+    <React.Fragment>
+      <div
+        className="flex justify-around items-center fixed top-0 left-0 z-30 h-24  bg-indigo-100
+                border-b-2 border-gray-500 w-full"
+      >
+        <Link className="flex flex-none" to="/">
+          <img
+            title="Home Page"
+            src={logo}
+            alt="Outdoor King Logo"
+            className="w-24"
+          />
+        </Link>
 
-        history.push('/signIn');
-    }
+        <div className={`flex-initial ${globalStyles.textBig} cursor-pointer`}>
+          <span
+            className={globalStyles.borderBottomHover}
+            onClick={onLoginClick}
+          >
+            {user?.token ? "Logout" : "Login"}
+          </span>
+        </div>
 
-    return (
-        <React.Fragment>
+        <CategoryDropdown />
 
-            <div className="flex justify-around items-center fixed top-0 left-0 z-30 h-24 sm:h-40 bg-indigo-100
-                border-b-2 border-gray-500 w-full">
+        {user?.profile?.name?.toLowerCase() === "admin" ? (
+          <AdminDropdown />
+        ) : (
+          ""
+        )}
 
-                <Link className='flex flex-none' to='/'>
-                    <img title="Home Page" src={logo} alt="Outdoor King Logo" className="w-24 sm:w-32" />
-                </Link>
+        <CartIcon />
+      </div>
 
-                <div className={`flex-initial ${globalStyles.textBig} cursor-pointer`}>
-                    <span className={globalStyles.borderBottomHover} onClick={onLoginClick}>
-                        {user?.token ? 'Logout' : 'Login'}
-                    </span>
-                </div>
-
-                <CategoryDropdown />
-
-                {
-                    user?.profile?.name?.toLowerCase() === 'admin' ? <AdminDropdown /> : ''
-                }
-
-                <CartIcon />
-            </div>
-
-            <div className="mt-40 sm:mt-60"></div>
-        </React.Fragment>
-
-    );
-}
+      <div className="mt-40"></div>
+    </React.Fragment>
+  );
+};
 
 export default Header;

@@ -43,7 +43,7 @@ const CategoryProduct = ({
   return (
     <React.Fragment>
       {product ? (
-        <div className="flex flex-col items-center flex-none rounded-3xl w-2/5 md:w-1/4 lg:w-1/5 xl:w-1/6 mt-10 p-5 ml-4 mr-4 bg-indigo-100 sm:bg-indigo-100 lg:bg-white hover:bg-indigo-100">
+        <div className="flex flex-col items-center flex-none rounded-3xl w-2/5 md:w-1/4 lg:w-1/5  mt-10 p-5 ml-4 mr-4 bg-indigo-100 sm:bg-indigo-100">
           {isAdmin ? (
             <div className="mb-8 w-full flex justify-end items-center">
               <div
@@ -72,6 +72,7 @@ const CategoryProduct = ({
           </span>
 
           {product.image ? (
+            // <div className="p-4">
             <img
               onClick={onProductClick}
               src={product.image.toString()}
@@ -79,6 +80,7 @@ const CategoryProduct = ({
               className={`${globalStyles.imageDisplay}`}
             />
           ) : (
+            // </div>
             ""
           )}
 

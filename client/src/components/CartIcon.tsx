@@ -18,15 +18,15 @@ const CartIcon = () => {
           }
           src={cart}
           alt="Your Cart"
-          className="w-10 h-6 sm:w-20 sm:h-16"
+          className="w-10 h-6 sm:w-14 sm:h-10"
         />
         {productsNumber && productsNumber > 0 ? (
           <span
             title={`${productsNumber} Products in your Cart.`}
             className={`p-1 absolute text-white bg-red-500
                             flex rounded-full items-center justify-center
-                            bottom-5 left-3 sm:bottom-14 sm:left-7
-                            h-6 w-6 sm:h-11 sm:w-11 
+                            bottom-5 left-3 sm:bottom-8 sm:left-5
+                            h-6 w-6 sm:h-8 sm:w-8 
                             text-sm sm:${globalStyles.textDefault}`}
           >
             {productsNumber}
