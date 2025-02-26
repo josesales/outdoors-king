@@ -15,8 +15,8 @@ const CategoryProduct = ({
   product: Product;
   minified?: boolean;
 }) => {
-  const dispatch = useAppDispatch();
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.user);
   const token = user.token;
