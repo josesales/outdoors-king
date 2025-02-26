@@ -12,7 +12,6 @@ import path from "path";
 (async () => {
   const port = process.env.PORT;
   const app = express();
-
   const prisma = new PrismaClient();
 
   const server = new ApolloServer({
